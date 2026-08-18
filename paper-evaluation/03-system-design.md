@@ -36,23 +36,25 @@ Layer 2: 小模型复检层（单帧内验证）
 
 ### 2.1 完整类别表（15 个原子行为）
 
-| ID | 中文 | 英文 | 候选 token | 优先级 |
-|---|---|---|---|---|
-| 0 | 正常 | normal | "normal" | 15 |
-| 1 | 离座 | away | "away" | 2 |
-| 2 | 遮挡 | blocked | "blocked" | 1 |
-| 3 | 玩玩具 | toy | "toy" | 4 |
-| 4 | 玩电子设备 | phone | "phone" | 3 |
-| 5 | 吃零食 | snack | "snack" | 5 |
-| 6 | 闭眼 | sleepy | "sleepy" | 6 |
-| 7 | 趴桌 | prone | "prone" | 7 |
-| 8 | 低头 | bowed | "bowed" | 8 |
-| 9 | 斜肩 | slope | "slope" | 12 |
-| 10 | 仰躺 | recline | "recline" | 13 |
-| 11 | 仰头 | lookup | "lookup" | 14 |
-| 12 | 歪头 | tilt | "tilt" | 10 |
-| 13 | 转头 | turn | "turn" | 11 |
-| 14 | 托腮 | chinrest | "chinrest" | 9 |
+| ID | 中文 | 英文 | 候选 token |
+|---|---|---|---|
+| 0 | 正常 | normal | "normal" |
+| 1 | 离座 | away | "away" |
+| 2 | 遮挡 | blocked | "blocked" |
+| 3 | 玩玩具 | toy | "toy" |
+| 4 | 玩电子设备 | phone | "phone" |
+| 5 | 吃零食 | snack | "snack" |
+| 6 | 闭眼 | sleepy | "sleepy" |
+| 7 | 趴桌 | prone | "prone" |
+| 8 | 低头 | bowed | "bowed" |
+| 9 | 斜肩 | slope | "slope" |
+| 10 | 仰躺 | recline | "recline" |
+| 11 | 仰头 | lookup | "lookup" |
+| 12 | 歪头 | tilt | "tilt" |
+| 13 | 转头 | turn | "turn" |
+| 14 | 托腮 | chinrest | "chinrest" |
+
+> **主导类别判定**：不使用固定优先级排序。模型基于视觉理解自行判断最主导的行为；最终主导类别由业务逻辑层结合各类别概率与模型判断结果通过算法确定（当前框架仅输出数据，业务逻辑层暂未实现）。
 
 ### 2.2 Token 验证脚本
 
@@ -72,7 +74,7 @@ System Prompt 要求模型两步：选主导类别token -> 一句话推理依据
 - 输入：单张图像 + "分析学习行为"
 - 输出：bowed 学生头部明显前倾，鼻尖低于肩部连线...
 
-主导类别按优先级选取：blocked > away > phone > toy > snack > sleepy > prone > bowed > chinrest > tilt > turn > slope > recline > lookup > normal
+主导类别由模型基于视觉理解自行判断（不设固定优先级）。最终主导类别由业务逻辑层结合各类别 sigmoid 概率与模型判断的主导类别通过算法确定。当前框架仅输出两类数据（15 类概率 + 模型判断的主导类别），业务逻辑层暂未实现。
 
 ### 3.2 Loss 设计：CE + 辅助 BCE 混合
 

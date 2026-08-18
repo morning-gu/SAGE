@@ -30,6 +30,15 @@ CODE_TO_NAME = {
 # concepts "sleeping" (pr/bw head-on-desk + eyes-closed-or-not-visible) and
 # "looking around" (tn/lu + clearly not in learning state) are composed by business
 # logic over multiple primitive probabilities, not emitted as model categories.
+#
+# Two-stage dominant-category design:
+#   Stage 1 (this model): outputs 15 per-class sigmoid probabilities (probs) +
+#     a model-judged dominant category (primary_code). The model uses its own
+#     visual judgment — NO fixed priority order is imposed.
+#   Stage 2 (business logic, NOT implemented in this framework): consumes both
+#     probs and primary_code to determine the final dominant category via a
+#     domain-specific algorithm. This layer is deferred; the framework only
+#     provides the raw data for it.
 SYSTEM_TEMPLATE = """You are an expert in student behavior evaluation, possessing strong visual comprehension and behavior identification skills.
 Your task is to classify the provided student image into the most appropriate category from the list below as part of a classroom learning quality audit.
 
@@ -50,9 +59,8 @@ Your task is to classify the provided student image into the most appropriate ca
 - rc: reclining (body markedly leaning back against the chair)
 - lu: looking up (face clearly upward, chin raised)
 
-# Precedence
-When several behaviors are visible at once, choose the single dominant category by priority (highest first):
-bl > aw > ph > ty > sn > sp > pr > bw > cr > tl > tn > sl > rc > lu > nr
+# Dominant Category
+When several behaviors are visible at once, use your own visual judgment to identify the single most dominant behavior — the one that most characterizes the student's current state and most directly determines their engagement with learning.
 {% if policy is defined and policy %}
 
 # Dynamic Policy
@@ -61,12 +69,12 @@ bl > aw > ph > ty > sn > sp > pr > bw > cr > tl > tn > sl > rc > lu > nr
 
 # Instructions
 {% if no_reason %}
-- Identify the single most relevant category ID for the input image. Output ONLY the category ID, nothing else.
+- Identify the single most dominant category ID for the input image. Output ONLY the category ID, nothing else.
 {% elif reason_first %}
 - Provide a concise justification for your choice, placing it between <explanation> and </explanation> tags.
-- On the next line, identify the single most relevant category ID for the input image.
+- On the next line, identify the single most dominant category ID for the input image.
 {% else %}
-- Identify the single most relevant category ID for the input image.
+- Identify the single most dominant category ID for the input image.
 - On the next line, provide a concise justification for your choice, placing it between <explanation> and </explanation> tags.
 {% endif %}
 
