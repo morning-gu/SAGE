@@ -21,6 +21,7 @@ Usage:
   python scripts/generate_explanations.py
   python scripts/generate_explanations.py --split train --workers 2
   python scripts/generate_explanations.py --resume
+  python scripts/generate_explanations.py --force
 """
 
 from __future__ import annotations
@@ -464,6 +465,11 @@ def main():
     ap.add_argument("--no-verify-ssl", default=False, action="store_true")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--resume", action="store_true")
+    # Reprocess every sample, ignoring any existing model_code (e.g. the
+    # input file already carried results). Samples that fail again keep
+    # their previous model_code rather than losing it.
+    ap.add_argument("--force", action="store_true",
+                    help="reprocess all samples even if model_code is set")
     a = ap.parse_args()
 
     sys_prompt = render_prompt(reason_first=a.reason_first, policy=None, no_reason=False)
@@ -499,7 +505,15 @@ def main():
                         s[k] = e[k]
         print(f"[resume] loaded {len(existing)} existing results")
 
-    todo = [s for s in samples if not s.get("model_code")]
+    if a.force:
+        # --force overrides the "has model_code => done" gate so samples
+        # stuck with model_code but no explanation (or stale results) get
+        # regenerated. --resume may still prime non-result fields, but
+        # force decides the todo list.
+        todo = list(samples)
+        print("[force] reprocessing all samples regardless of existing model_code")
+    else:
+        todo = [s for s in samples if not s.get("model_code")]
     print(f"Total: {len(samples)}, done: {len(samples)-len(todo)}, to process: {len(todo)}")
     if not todo:
         print("Nothing to do.")
