@@ -112,13 +112,85 @@ def _label_position_bce(logits, labels, label_vector, label_ids):
     return F.binary_cross_entropy_with_logits(label_logits, tgt)
 
 
-def make_trainer(label_ids, bce_weight=0.3):
-    """Build a swift Seq2SeqTrainer subclass that adds BCE on the 15 label-token
-    logits at the first label-code position, on top of swift's native CE.
+def _label_position_mp_correction(logits, labels, label_vector, label_ids, denom):
+    """Multi-positive correction that turns the hard single-label CE at the
+    first label-code position into a soft-set CE (any valid label accepted).
+
+    For each sample the per-token CE at the label position is
+        L_hard = -log p(primary)            (what swift's CE includes)
+        L_soft = -log sum_{c in valid} p(c)  (what we want instead)
+    so the replacement correction is
+        delta = L_soft - L_hard = logit[primary] - logsumexp(logit[valid])  (<= 0)
+    because primary is one of the valid tokens.  The log-partition cancels,
+    so this is numerically stable and needs no full-vocab softmax.
+
+    Single-label samples have valid == {primary} -> delta == 0 (no-op), so they
+    keep the standard hard CE.  The total correction is summed over the batch and
+    divided by ``denom`` (the CE reduction denominator) so it lives on the same
+    scale as the token-averaged CE loss.
+
+    Args:
+        logits: [B, T, V], labels: [B, T] (-100 masked), label_vector: [B, k]
+                (already aligned to label_ids), label_ids: [k] token ids,
+                denom: float > 0 (num non-ignored tokens, or num_items_in_batch).
+    Returns:
+        scalar tensor (<= 0) to *add* to the CE loss.
+    """
+    import torch
+    dev = logits.device
+    B = logits.shape[0]
+    id_list = label_ids.tolist() if torch.is_tensor(label_ids) else list(label_ids)
+    id_set = set(id_list)
+    id_tensor = torch.tensor(id_list, device=dev, dtype=torch.long)  # [k]
+
+    deltas = []
+    for b in range(B):
+        lab = labels[b]
+        resp_mask = lab != -100
+        if not resp_mask.any():
+            continue
+        resp_start = int(resp_mask.nonzero(as_tuple=False)[0].item())
+        resp_tokens = lab[resp_mask].tolist()
+        idx = _label_position(resp_tokens, id_set)
+        if idx is None:
+            continue
+        logit_pos = resp_start + idx - 1
+        if logit_pos < 0:
+            continue
+        primary_tok = resp_tokens[idx]
+        if primary_tok not in id_set:
+            continue  # multi-token primary code; correction cannot apply
+        lv = label_vector[b]
+        valid_mask = lv == 1
+        if int(valid_mask.sum().item()) <= 1:
+            continue  # single-label: delta == 0, skip
+        valid_ids = id_tensor[valid_mask]            # [m] valid label token ids
+        pos_logits = logits[b, logit_pos, :]          # [V]
+        log_sum_valid = torch.logsumexp(pos_logits[valid_ids], dim=0)
+        delta = pos_logits[primary_tok] - log_sum_valid  # <= 0
+        deltas.append(delta)
+
+    if not deltas:
+        return torch.tensor(0.0, device=dev, requires_grad=True)
+    return torch.stack(deltas).sum() / float(denom)
+
+
+def make_trainer(label_ids, bce_weight=0.3, mp_weight=1.0):
+    """Build a swift Seq2SeqTrainer subclass with a hybrid loss:
+
+        total = CE(full sequence)
+              + mp_weight * multi_positive_correction(label position)
+              + bce_weight * BCE(15 label-token logits)
+
+    The multi-positive correction replaces the hard single-label CE at the first
+    label-code position with a soft-set CE so that predicting *any* of a sample's
+    valid labels is accepted (no penalty for co-occurring labels).  Single-label
+    samples are unaffected (correction == 0).  mp_weight=1.0 is an exact
+    replacement; 0.0 disables it (reverts to hard-CE behaviour).
 
     Reuses swift's compute_loss (forward + CE + per-token scaling) and layers the
-    multi-label BCE on its outputs, so there is no double forward pass. Falls back
-    to CE-only when label_ids is empty (no single-token codes resolved).
+    correction + BCE on its outputs, so there is no double forward pass.  Falls
+    back to CE-only when label_ids is empty (no single-token codes resolved).
     """
     import torch
     from swift.trainers import Seq2SeqTrainer
@@ -144,6 +216,16 @@ def make_trainer(label_ids, bce_weight=0.3):
                 lv = label_vector.to(logits.device)
                 if valid_idx is not None:
                     lv = lv.index_select(-1, valid_idx.to(lv.device))
+                # CE reduction denominator: num_items_in_batch (grad-accum) else
+                # the count of non-ignored tokens in this micro-batch.
+                if num_items_in_batch is not None:
+                    denom = float(num_items_in_batch)
+                else:
+                    denom = float((labels != -100).sum().item()) or 1.0
+                if mp_weight:
+                    corr = _label_position_mp_correction(
+                        logits, labels, lv, id_tensor, denom)
+                    loss = loss + mp_weight * corr
                 bce = _label_position_bce(logits, labels, lv, id_tensor)
                 loss = loss + bce_weight * bce
             return (loss, outputs) if return_outputs else loss
@@ -266,13 +348,63 @@ def selftest_bce():
     return True
 
 
+def selftest_mp():
+    """Verify the multi-positive correction math. Requires torch."""
+    import torch
+    import math
+    V = 100
+    label_ids = torch.tensor([10 + i for i in range(15)])
+
+    # 3 prompt tokens (-100) then response [nr=10, EOS=0]; logit_pos=2, denom=2.
+    labels = torch.full((1, 6), -100, dtype=torch.long)
+    labels[0, 3] = 10
+    labels[0, 4] = 0
+    denom = 2.0
+
+    lv_multi = torch.zeros(1, 15); lv_multi[0, 0] = 1; lv_multi[0, 1] = 1  # nr+aw
+    lv_single = torch.zeros(1, 15); lv_single[0, 0] = 1                     # nr only
+
+    logits = torch.zeros(1, 6, V)
+
+    # Case 1: mass on both valid labels -> correction removes the hard-CE penalty
+    # for aw.  delta = 5 - logsumexp([5,5]) = -log(2).
+    logits[0, 2, 10] = 5.0; logits[0, 2, 11] = 5.0
+    c1 = _label_position_mp_correction(logits, labels, lv_multi, label_ids, denom)
+    expect = -math.log(2) / denom
+    print(f"  both-valid  corr = {c1.item():.4f}  (expect {expect:.4f})")
+    assert abs(c1.item() - expect) < 1e-5, "correction = -log(2)/denom when mass on both valid"
+
+    # Case 2: all mass on primary -> soft-set already satisfied, corr ~ 0.
+    logits[0, 2, 10] = 10.0; logits[0, 2, 11] = -10.0
+    c2 = _label_position_mp_correction(logits, labels, lv_multi, label_ids, denom)
+    print(f"  primary-only corr = {c2.item():.6f}  (expect ~0)")
+    assert abs(c2.item()) < 1e-4, "correction ~0 when all mass on primary"
+
+    # Case 3: single-label sample -> no-op (correction == 0).
+    logits[0, 2, 10] = 5.0; logits[0, 2, 11] = 5.0
+    c3 = _label_position_mp_correction(logits, labels, lv_single, label_ids, denom)
+    print(f"  single-label corr = {c3.item():.4f}  (expect 0)")
+    assert abs(c3.item()) < 1e-6, "single-label correction must be 0"
+
+    # Case 4: mass on aw (non-primary valid) -> large negative correction
+    # removing the hard-CE penalty for not picking primary.
+    logits[0, 2, 10] = -10.0; logits[0, 2, 11] = 10.0
+    c4 = _label_position_mp_correction(logits, labels, lv_multi, label_ids, denom)
+    print(f"  aw-only     corr = {c4.item():.4f}  (expect large negative)")
+    assert c4.item() < -5.0, "correction large-negative when mass on non-primary valid"
+
+    print("  multi-positive correction: OK")
+    return True
+
+
 def selftest():
     print("[sage_hybrid_loss self-test]")
     selftest_positions()
     try:
         import torch  # noqa: F401
         selftest_bce()
-        print("selftest PASSED (positions + BCE)")
+        selftest_mp()
+        print("selftest PASSED (positions + BCE + multi-positive)")
     except ModuleNotFoundError:
         print("selftest PASSED (positions only; install torch to also verify BCE)")
 
@@ -329,7 +461,8 @@ def run_training(a):
             self.model = self.prepare_model(
                 args, self.model, template=self.template, train_dataset=train_dataset)
 
-            TrainerCls = make_trainer(label_token_ids, bce_weight=a.bce_weight)
+            TrainerCls = make_trainer(label_token_ids, bce_weight=a.bce_weight,
+                                  mp_weight=a.mp_weight)
             trainer = TrainerCls(
                 model=self.model, args=args.training_args, template=self.template,
                 train_dataset=train_dataset, eval_dataset=val_dataset)
@@ -351,6 +484,9 @@ def main():
     ap.add_argument("--output-dir", default="checkpoints/swift_lora",
                     help="LoRA adapter output directory")
     ap.add_argument("--bce-weight", type=float, default=0.3)
+    ap.add_argument("--mp-weight", type=float, default=1.0,
+                    help="multi-positive correction weight (1.0=exact soft-set "
+                         "replacement of hard CE at label pos; 0.0=disable)")
     ap.add_argument("--num-train-epochs", type=float, default=5)
     ap.add_argument("--per-device-train-batch-size", type=int, default=1)
     ap.add_argument("--gradient-accumulation-steps", type=int, default=16)

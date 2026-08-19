@@ -295,7 +295,13 @@ def compute_metrics(
     ece = compute_ece(probs, labels, ece_bins)
     subset_acc = float(np.mean(np.all(preds_binary == labels, axis=1)))
     hamming = float(np.mean(preds_binary != labels))
-    primary_acc = float(np.mean(pred_primary == gt_primary))
+    # Primary accuracy (multi-label hit): the predicted dominant label is
+    # correct if it matches ANY of the sample's ground-truth labels, not just
+    # the single annotated dominant one.  For single-label samples this is
+    # identical to exact match.
+    primary_hit = labels[np.arange(len(gt)), pred_primary] > 0.5
+    primary_acc = float(np.mean(primary_hit))
+    primary_acc_exact = float(np.mean(pred_primary == gt_primary))
     cm = confusion_matrix(gt_primary, pred_primary, NUM_CLASSES)
 
     return {
@@ -310,6 +316,7 @@ def compute_metrics(
             "subset_accuracy": round(subset_acc, 4),
             "hamming_loss": round(hamming, 4),
             "primary_accuracy": round(primary_acc, 4),
+            "primary_accuracy_exact": round(primary_acc_exact, 4),
         },
         "per_class": per_class,
         "latency": latency_stats(latencies),
@@ -339,7 +346,8 @@ def print_report(report: dict) -> None:
     print(f"{'ECE':<12s} {ov['ECE']:.4f}")
     print(f"{'Subset-Acc':<12s} {ov['subset_accuracy']:.4f}")
     print(f"{'Hamming-Loss':<12s} {ov['hamming_loss']:.4f}")
-    print(f"{'Primary-Acc':<12s} {ov['primary_accuracy']:.4f}")
+    print(f"{'Primary-Acc':<12s} {ov['primary_accuracy']:.4f}  (hit: any valid label)")
+    print(f"{'Primary-Exact':<12s} {ov['primary_accuracy_exact']:.4f}  (strict dominant match)")
     lat = report.get("latency", {})
     if lat.get("mean_ms", 0) > 0:
         print(f"\nLatency: mean={lat['mean_ms']:.0f}ms, "
