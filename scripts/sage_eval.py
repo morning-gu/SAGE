@@ -195,7 +195,6 @@ def run_inference(
                 image_bytes=buf.getvalue(),
                 system_prompt=prompt,
                 max_tokens=1 if no_reason else 1024,
-                no_reason=no_reason,
             )
             ms = round((time.perf_counter() - t0) * 1000, 1)
 

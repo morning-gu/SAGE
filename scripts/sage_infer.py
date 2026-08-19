@@ -57,12 +57,6 @@ Your task is to classify the provided student image into the most appropriate ca
 
 # Dominant Category
 When several behaviors are visible at once, use your own visual judgment to identify the single most dominant behavior -- the one that most characterizes the student's current state and most directly determines their engagement with learning.
-{% if policy is defined and policy %}
-
-# Dynamic Policy
-{{ policy | trim }}
-{% endif %}
-
 # Instructions
 {% if no_reason %}
 - Identify the single most dominant category ID for the input image. Output ONLY the category ID, nothing else.
@@ -196,8 +190,7 @@ class LocalModel:
         print(f"[local] Token mapping: {len(self._label_token_ids)}/{len(BEHAVIOR_CODES)}")
         print("[local] Ready.")
 
-    def infer(self, image_bytes, system_prompt, max_tokens=1024,
-              no_reason=False):
+    def infer(self, image_bytes, system_prompt, max_tokens=1024):
         import torch
         from PIL import Image
         import io
@@ -309,7 +302,7 @@ def main():
     raw, probs = model.infer(
         image_bytes=buf.getvalue(), system_prompt=prompt,
         max_tokens=1 if no_reason else 1024,
-        no_reason=no_reason)
+        )
     ms = (time.perf_counter() - t0) * 1000
 
     r = parse_output(raw)

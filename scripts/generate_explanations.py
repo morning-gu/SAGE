@@ -92,16 +92,15 @@ def encode_image(path):
         return base64.b64encode(f.read()).decode("utf-8")
 
 
-def resolve_image_path(sample, images_dir, image_ext=".jpg"):
+def resolve_image_path(sample):
+    """Resolve the sample's image_path; return None if not found."""
     rec = sample.get("image_path")
-    if rec:
-        p = Path(rec)
-        if not p.is_absolute():
-            p = (Path.cwd() / p).resolve()
-        if p.exists():
-            return p
-    cand = images_dir / f"{sample['sample_id']}{image_ext}"
-    return cand.resolve() if cand.exists() else None
+    if not rec:
+        return None
+    p = Path(rec)
+    if not p.is_absolute():
+        p = (Path.cwd() / p).resolve()
+    return p if p.exists() else None
 
 
 def _detect_windows_proxy():
@@ -255,9 +254,9 @@ def _verify(api_url, api_key, model, image_b64, explanation, gt_primary, **kw):
     return "YES" in raw.upper()
 
 
-def process_sample(sample, api_url, api_key, model, sys_prompt, images_dir, **kw):
+def process_sample(sample, api_url, api_key, model, sys_prompt, **kw):
     """Three-tier progressive explanation. Returns (sample_id, result_dict, error)."""
-    img_path = resolve_image_path(sample, images_dir)
+    img_path = resolve_image_path(sample)
     if not img_path:
         return sample["sample_id"], None, "image_not_found"
     img_b64 = encode_image(img_path)
@@ -427,7 +426,6 @@ def main():
         description="Generate per-sample <explanation> via three-tier progressive strategy.")
     ap.add_argument("--annotations", required=True,
                     help="Input annotations JSON file")
-    ap.add_argument("--images-dir", default="data/sage_eval/images")
     ap.add_argument("--model", default="qwen3.7-plus",
                     help="VLM model name for API calls")
     ap.add_argument("--base-url",
@@ -516,8 +514,7 @@ def main():
     print(f"[api] url={api_url}  model={a.model}")
     print(f"[proxy] {proxy_url or 'direct (no proxy)'}")
 
-    images_dir = Path(a.images_dir)
-    missing = sum(1 for s in todo if not resolve_image_path(s, images_dir))
+    missing = sum(1 for s in todo if not resolve_image_path(s))
     if missing:
         print(f"[warn] {missing}/{len(todo)} images not found")
 
@@ -528,7 +525,7 @@ def main():
     with ThreadPoolExecutor(max_workers=a.workers) as pool:
         future_to_sample = {
             pool.submit(process_sample, s, api_url, api_key, a.model, sys_prompt,
-                        images_dir, **kw): s
+                        **kw): s
             for s in todo
         }
         for future in as_completed(future_to_sample):

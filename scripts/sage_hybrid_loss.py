@@ -21,7 +21,7 @@ Usage
       --dataset data/swift/train.jsonl --output-dir checkpoints/swift_lora
 
 Dataset records MUST carry a `label_vector` field (see convert_to_swift.py).
-SAGEDataCollator injects it into the batch; SAGETrainer.compute_loss uses it.
+_patch_sage_template injects it into the batch; SAGETrainer.compute_loss uses it.
 """
 
 from __future__ import annotations
@@ -110,41 +110,6 @@ def _label_position_bce(logits, labels, label_vector, label_ids):
     label_logits = sel_logits[:, id_tensor]  # [n, 15]
     import torch.nn.functional as F
     return F.binary_cross_entropy_with_logits(label_logits, tgt)
-
-
-def compute_hybrid_loss(model, inputs, label_ids, bce_weight=0.3):
-    """CE (model SFT loss) + bce_weight * BCE (label-position multi-label)."""
-    outputs = model(**inputs)
-    ce = outputs.loss
-    if label_ids is None or "label_vector" not in inputs or "labels" not in inputs:
-        return ce, (ce, _zero(ce.device))
-    bce = _label_position_bce(outputs.logits, inputs["labels"],
-                              inputs["label_vector"], label_ids)
-    return ce + bce_weight * bce, (ce, bce)
-
-
-def _zero(dev):
-    import torch
-    return torch.tensor(0.0, device=dev)
-
-
-class SAGEDataCollator:
-    """Wraps a base collator and injects `label_vector` into the batch.
-
-    swift's default collator pads input_ids/labels/pixel_values but drops custom
-    fields. This re-adds label_vector so SAGETrainer.compute_loss can read it.
-    """
-
-    def __init__(self, base_collator):
-        self.base = base_collator
-
-    def __call__(self, features):
-        batch = self.base(features)
-        lvs = [f["label_vector"] for f in features if f.get("label_vector") is not None]
-        if lvs:
-            import torch
-            batch["label_vector"] = torch.tensor(lvs, dtype=torch.float32)
-        return batch
 
 
 def make_trainer(label_ids, bce_weight=0.3):
