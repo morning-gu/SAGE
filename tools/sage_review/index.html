@@ -10,7 +10,7 @@
   --accent:#4f46e5; --canvas:#0b1220;
   --normal:#10b981; --distraction:#f59e0b; --drowsy:#8b5cf6;
   --posture:#0ea5e9; --block:#f43f5e;
-  --st-unreviewed:#94a3b8; --st-correct:#10b981; --st-corrected:#4f46e5; --st-flagged:#f59e0b;
+  --st-unreviewed:#94a3b8; --st-correct:#10b981; --st-corrected:#4f46e5; --st-flagged:#f59e0b; --st-discarded:#ef4444;
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);
@@ -61,6 +61,8 @@ select.sel:focus{border-color:var(--accent)}
 .btn:hover{background:#f1f5f9}
 .btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
 .btn.primary:hover{background:#4338ca}
+.btn.danger{color:#be123c;border-color:#fecaca}
+.btn.danger:hover{background:#fef2f2}
 .btn svg{width:15px;height:15px}
 .progress{flex:0 0 90px;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden}
 .progress > i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
@@ -86,6 +88,7 @@ select.sel:focus{border-color:var(--accent)}
 .st-correct{background:var(--st-correct)}
 .st-corrected{background:var(--st-corrected)}
 .st-flagged{background:var(--st-flagged)}
+.st-discarded{background:var(--st-discarded)}
 
 /* main */
 .main{grid-area:main;background:var(--canvas);display:flex;flex-direction:column;min-width:0;position:relative}
@@ -121,6 +124,7 @@ select.sel:focus{border-color:var(--accent)}
 .b-correct{background:#ecfdf5;color:#047857}
 .b-corrected{background:#eef2ff;color:#4338ca}
 .b-flagged{background:#fffbeb;color:#b45309}
+.b-discarded{background:#fef2f2;color:#be123c}
 .vbadge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:700;white-space:nowrap}
 .v-free_match{background:#ecfdf5;color:#047857}
 .v-redirect_match{background:#f0fdfa;color:#0f766e}
@@ -226,6 +230,7 @@ select.sel:focus{border-color:var(--accent)}
       <option value="correct">正确</option>
       <option value="corrected">已改</option>
       <option value="flagged">待复核</option>
+      <option value="discarded">已丢弃</option>
     </select>
     <select class="sel" id="fprimary" title="主标签"></select>
     <select class="sel" id="fverif" title="模型验证">
@@ -286,6 +291,9 @@ select.sel:focus{border-color:var(--accent)}
         <button class="btn" id="breset" title="恢复为原始标注 (Z)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>恢复原标
       </button>
+        <button class="btn danger" id="bdiscard" title="丢弃此用例，导出时不包含 (X)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>丢弃
+        </button>
       </div>
     </section>
 
@@ -342,7 +350,7 @@ const LABELS=[
 ];
 const BYKEY=Object.fromEntries(LABELS.map(l=>[l.key,l]));
 const GROUPCOLOR={normal:"var(--normal)",away:"var(--distraction)",toy:"var(--distraction)",phone:"var(--distraction)",snack:"var(--distraction)",eyesclosed:"var(--drowsy)",prone:"var(--posture)",bowed:"var(--posture)",chinrest:"var(--posture)",tilt:"var(--posture)",turn:"var(--posture)",slope:"var(--posture)",recline:"var(--posture)",lookup:"var(--posture)",blocked:"var(--block)"};
-const STNAME={unreviewed:"未审",correct:"正确",corrected:"已改",flagged:"待复核"};
+const STNAME={unreviewed:"未审",correct:"正确",corrected:"已改",flagged:"待复核",discarded:"已丢弃"};
 const SHORTCUTS=[["1","normal"],["2","away"],["3","toy"],["4","phone"],["5","snack"],["6","eyesclosed"],["7","prone"],["8","bowed"],["9","chinrest"],["0","tilt"],["q","turn"],["w","slope"],["e","recline"],["r","lookup"],["t","blocked"]];
 const SCMAP=Object.fromEntries(SHORTCUTS);
 
@@ -511,7 +519,7 @@ function toggleLabel(key){const s=cur();if(!s)return;s.labels[key]=s.labels[key]
 function setPrimary(key){const s=cur();if(!s)return;if(s.labels[key]===1){s.primary_label=key;afterEdit();}}
 function fixPrimary(s){if(s.labels[s.primary_label]!==1){const f=LABELS.find(l=>s.labels[l.key]===1);s.primary_label=f?f.key:"";}}
 function recompute(s){
-  if(s._review.status==="flagged")return;
+  if(s._review.status==="flagged"||s._review.status==="discarded")return;
   if(isChanged(s)){s._review.status="corrected";}
   else if(s._review.status==="corrected"){s._review.status="unreviewed";}
 }
@@ -519,6 +527,7 @@ function statusView(s){return s._review.status;}
 function confirmCurrent(){const s=cur();if(!s)return;s._review.status=isChanged(s)?"corrected":"correct";afterEdit();goNext();}
 function toggleFlag(){const s=cur();if(!s)return;s._review.status=s._review.status==="flagged"?(isChanged(s)?"corrected":"correct"):"flagged";afterEdit();}
 function resetCurrent(){const s=cur();if(!s)return;const o=original.get(s.sample_id);if(!o)return;s.labels={...o.labels};s.primary_label=o.primary_label;s._review.status="unreviewed";afterEdit();}
+function discardCurrent(){const s=cur();if(!s)return;s._review.status="discarded";afterEdit();goNext();}
 function afterEdit(){const s=cur();s._review.ts=Date.now();renderCurrent();updateRow(s);renderStats();scheduleSave();}
 function updateRow(s){const el=document.querySelector(`.row[data-id="${s.sample_id}"]`);if(!el)return;const dot=el.querySelector(".dot");dot.className="dot st-"+(statusView(s));const meta=el.querySelector(".rowmeta");const first=meta.firstChild;if(first&&first.className==="chipmini"){meta.replaceChild(document.createRange().createContextualFragment(primaryChip(s.primary_label)),first);}el.classList.toggle("on",s.sample_id===curId);}
 
@@ -529,9 +538,9 @@ function goPrev(){const i=order.indexOf(curId);if(i>0)select(order[i-1]);}
 function goNextUnreviewed(){const i=order.indexOf(curId);for(let j=i+1;j<order.length;j++){if((wIndex.get(order[j])._review.status)==="unreviewed"){select(order[j]);return;}}for(let j=0;j<order.length;j++){if((wIndex.get(order[j])._review.status)==="unreviewed"){select(order[j]);return;}}}
 
 function renderStats(){
-  let un=0,cor=0,cd=0,fl=0;for(const s of working){const st=statusView(s);if(st==="unreviewed")un++;else if(st==="correct")cor++;else if(st==="corrected")cd++;else if(st==="flagged")fl++;}
+  let un=0,cor=0,cd=0,fl=0,di=0;for(const s of working){const st=statusView(s);if(st==="unreviewed")un++;else if(st==="correct")cor++;else if(st==="corrected")cd++;else if(st==="flagged")fl++;else if(st==="discarded")di++;}
   const rev=working.length-un; $("#pbar").style.width=(working.length?(rev/working.length*100):0)+"%";
-  const items=[["unreviewed","未审",un,"#94a3b8"],["correct","正确",cor,"#10b981"],["corrected","已改",cd,"#4f46e5"],["flagged","待复核",fl,"#f59e0b"]];
+  const items=[["unreviewed","未审",un,"#94a3b8"],["correct","正确",cor,"#10b981"],["corrected","已改",cd,"#4f46e5"],["flagged","待复核",fl,"#f59e0b"],["discarded","已丢弃",di,"#ef4444"]];
   $("#stats").innerHTML=items.map(([k,n,v,c])=>`<div class="stat ${filters.status===k?"on":""}" data-st="${k}" title="${n}"><b style="color:${c}">${v}</b><span>${n}</span></div>`).join("");
 }
 
@@ -548,14 +557,14 @@ async function saveNow(){
 }
 
 function exportClean(){
-  const clean=working.map(s=>{const c={...s,labels:{...s.labels}};delete c._review;return c;});
+  const clean=working.filter(s=>s._review.status!=="discarded").map(s=>{const c={...s,labels:{...s.labels}};delete c._review;return c;});
   const blob=new Blob([JSON.stringify(clean,null,2)],{type:"application/json"});
   const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="annotations_corrected.json";a.click();URL.revokeObjectURL(a.href);
 }
 
 function renderHelp(){
   const rows=SHORTCUTS.map(([k,key])=>`<kbd>${k.toUpperCase()}</kbd> ${BYKEY[key].zh}`).join("　");
-  $("#help").innerHTML=`<kbd>←</kbd>/<kbd>→</kbd> 或 <kbd>A</kbd>/<kbd>D</kbd> 上一个/下一个<br><kbd>Enter</kbd> 确认无误并下一个<br><kbd>F</kbd> 标记待复核<br><kbd>N</kbd> 跳到下一个未审<br><kbd>Z</kbd> 恢复原始标注<br><kbd>Esc</kbd> 退出输入框<br><br>标签快捷键：<br>${rows}`;
+  $("#help").innerHTML=`<kbd>←</kbd>/<kbd>→</kbd> 或 <kbd>A</kbd>/<kbd>D</kbd> 上一个/下一个<br><kbd>Enter</kbd> 确认无误并下一个<br><kbd>F</kbd> 标记待复核<br><kbd>N</kbd> 跳到下一个未审<br><kbd>Z</kbd> 恢复原始标注<br><kbd>X</kbd> 丢弃用例<br><kbd>Esc</kbd> 退出输入框<br><br>标签快捷键：<br>${rows}`;
 }
 
 /* events */
@@ -566,6 +575,7 @@ $("#notes").addEventListener("input",()=>{const s=cur();if(s){s._review.notes=$(
 $("#bconfirm").addEventListener("click",confirmCurrent);
 $("#bflag").addEventListener("click",toggleFlag);
 $("#breset").addEventListener("click",resetCurrent);
+$("#bdiscard").addEventListener("click",discardCurrent);
 $("#prev").addEventListener("click",goPrev);
 $("#next").addEventListener("click",goNext);
 $("#nextun").addEventListener("click",goNextUnreviewed);
@@ -590,6 +600,7 @@ document.addEventListener("keydown",e=>{
   else if(k==="f"){e.preventDefault();toggleFlag();}
   else if(k==="n"){e.preventDefault();goNextUnreviewed();}
   else if(k==="z"){e.preventDefault();resetCurrent();}
+  else if(k==="x"){e.preventDefault();discardCurrent();}
   else if(k==="escape"){if(typing)ae.blur();}
   else if(SCMAP[k]!==undefined){e.preventDefault();toggleLabel(SCMAP[k]);}
 });
