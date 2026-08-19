@@ -1,9 +1,13 @@
 """
-SAGE Student Behavior Inference (YuFeng-XGuard-Reason style, sigmoid, local).
+SAGE Student Behavior Inference.
+
+Supports base model and LoRA fine-tuned model inference, with no_reason
+(code only) and reason (code + explanation) modes.
 
 Usage:
   python scripts/sage_infer.py --model-path Qwen/Qwen3.5-4B --image photo.jpg
-  python scripts/sage_infer.py --model-path Qwen/Qwen3.5-4B --image photo.jpg --no-reason
+  python scripts/sage_infer.py --model-path Qwen/Qwen3.5-4B --image photo.jpg --mode reason
+  python scripts/sage_infer.py --model-path Qwen/Qwen3.5-4B --lora-path ./lora --image photo.jpg
 """
 
 from __future__ import annotations
@@ -26,24 +30,11 @@ CODE_TO_NAME = {
     "sl": "slope", "rc": "recline", "lu": "lookup",
 }
 
-# Note: ec (eyes closed) and tn (head turned) are atomic primitives. The compound
-# concepts "sleeping" (pr/bw head-on-desk + eyes-closed-or-not-visible) and
-# "looking around" (tn/lu + clearly not in learning state) are composed by business
-# logic over multiple primitive probabilities, not emitted as model categories.
-#
-# Two-stage dominant-category design:
-#   Stage 1 (this model): outputs 15 per-class sigmoid probabilities (probs) +
-#     a model-judged dominant category (primary_code). The model uses its own
-#     visual judgment — NO fixed priority order is imposed.
-#   Stage 2 (business logic, NOT implemented in this framework): consumes both
-#     probs and primary_code to determine the final dominant category via a
-#     domain-specific algorithm. This layer is deferred; the framework only
-#     provides the raw data for it.
 # SINGLE SOURCE OF TRUTH: The category descriptions in SYSTEM_TEMPLATE below
 # define the canonical criteria for all 15 behavior classes. convert_to_swift.py
 # (LABEL_EXPLANATION) and generate_explanations.py (LABEL_DEFS) must stay in sync.
 # When you change a definition here, regenerate training data:
-#   python scripts/convert_to_swift.py --mode reason_last
+#   python scripts/convert_to_swift.py --mode reason
 SYSTEM_TEMPLATE = """You are an expert in student behavior evaluation, possessing strong visual comprehension and behavior identification skills.
 Your task is to classify the provided student image into the most appropriate category from the list below as part of a classroom learning quality audit.
 
@@ -65,7 +56,7 @@ Your task is to classify the provided student image into the most appropriate ca
 - lu: looking up (face clearly upward, chin raised)
 
 # Dominant Category
-When several behaviors are visible at once, use your own visual judgment to identify the single most dominant behavior — the one that most characterizes the student's current state and most directly determines their engagement with learning.
+When several behaviors are visible at once, use your own visual judgment to identify the single most dominant behavior -- the one that most characterizes the student's current state and most directly determines their engagement with learning.
 {% if policy is defined and policy %}
 
 # Dynamic Policy
@@ -75,17 +66,12 @@ When several behaviors are visible at once, use your own visual judgment to iden
 # Instructions
 {% if no_reason %}
 - Identify the single most dominant category ID for the input image. Output ONLY the category ID, nothing else.
-{% elif reason_first %}
-- Provide a concise justification for your choice, placing it between <explanation> and </explanation> tags.
-- On the next line, identify the single most dominant category ID for the input image.
 {% else %}
 - Identify the single most dominant category ID for the input image.
 - On the next line, provide a concise justification for your choice, placing it between <explanation> and </explanation> tags.
 {% endif %}
 
----
-
-"""
+---"""
 
 
 @dataclass
@@ -101,16 +87,15 @@ class InferenceResult:
         return CODE_TO_NAME.get(self.primary_code, self.primary_code)
 
 
-def render_prompt(reason_first=True, policy=None, no_reason=False) -> str:
+def render_prompt(no_reason: bool = False) -> str:
     from jinja2 import Template
-    return Template(SYSTEM_TEMPLATE).render(
-        reason_first=reason_first, policy=policy, no_reason=no_reason)
+    return Template(SYSTEM_TEMPLATE).render(no_reason=no_reason)
 
 
 def parse_output(text: str) -> InferenceResult:
     """Strip think block, extract <explanation> + bare category code."""
     r = InferenceResult(raw_output=text)
-    think = re.search(r"\x3cthink\x3e(.*?)\x3c/think\x3e", text, re.DOTALL)
+    think = re.search(r"<think>(.*?)</think>", text, re.DOTALL)
     clean = text[think.end():].strip() if think else text
     m = re.search(r"<explanation>(.*?)</explanation>", clean, re.DOTALL)
     r.explanation = m.group(1).strip() if m else ""
@@ -155,6 +140,8 @@ def download_model(model_id: str, source: str = "auto") -> str:
 
 
 class LocalModel:
+    """Local VLM wrapper supporting base model and LoRA adapter inference."""
+
     def __init__(self, model_path, device="cuda", dtype="bf16",
                  lora_path=None, download_source="auto"):
         self.model_path = model_path
@@ -176,18 +163,13 @@ class LocalModel:
         dt = {"bf16": torch.bfloat16, "fp16": torch.float16, "fp32": torch.float32}
         print(f"[local] Loading {self.model_path} ...")
         self._processor = AutoProcessor.from_pretrained(self.model_path, trust_remote_code=True)
-        load_kwargs = dict(
-            device_map=self.device, trust_remote_code=True,
-        )
+        load_kwargs = dict(device_map=self.device, trust_remote_code=True)
         try:
             self._model = AutoModelForImageTextToText.from_pretrained(
-                self.model_path, dtype=dt.get(self.dtype, torch.bfloat16),
-                **load_kwargs)
+                self.model_path, dtype=dt.get(self.dtype, torch.bfloat16), **load_kwargs)
         except TypeError:
-            # Older transformers (<4.46) only supports torch_dtype=
             self._model = AutoModelForImageTextToText.from_pretrained(
-                self.model_path, torch_dtype=dt.get(self.dtype, torch.bfloat16),
-                **load_kwargs)
+                self.model_path, torch_dtype=dt.get(self.dtype, torch.bfloat16), **load_kwargs)
 
         tok = getattr(self._processor, "tokenizer", self._processor)
 
@@ -215,8 +197,7 @@ class LocalModel:
         print("[local] Ready.")
 
     def infer(self, image_bytes, system_prompt, max_tokens=1024,
-              temperature=0.001, reason_first=True, no_reason=False,
-              think=False):
+              no_reason=False):
         import torch
         from PIL import Image
         import io
@@ -234,39 +215,29 @@ class LocalModel:
                 {"type": "text", "text": "Analyze the student's behavior and provide your classification."},
             ]},
         ]
-        # Qwen3 models enable thinking by default in their chat template.
-        # Pass enable_thinking=False to suppress the chain-of-thought preamble.
-        # Fall back to manual think-block injection for templates that don't
-        # support the enable_thinking kwarg.
-        suppress = not think
+        # Qwen3 models enable thinking by default; suppress it so the model
+        # outputs only the classification response. Fall back to manual
+        # think-block injection for templates without enable_thinking support.
         try:
             inputs = self._processor.apply_chat_template(
                 messages, add_generation_prompt=True, tokenize=True,
                 return_dict=True, return_tensors="pt",
-                enable_thinking=think).to(self._model.device)
-            if suppress:
-                print("[local] Thinking suppressed (enable_thinking=False)")
+                enable_thinking=False).to(self._model.device)
         except (TypeError, KeyError):
             inputs = self._processor.apply_chat_template(
                 messages, add_generation_prompt=True, tokenize=True,
                 return_dict=True, return_tensors="pt").to(self._model.device)
-            if suppress:
-                print("[local] Thinking suppressed (manual think block)")
-                tk = self._processor.tokenizer.encode(
-                    "\x3cthink\x3e\n\n\x3c/think\x3e\n\n",
-                    add_special_tokens=False)
-                tids = torch.tensor([tk], dtype=inputs["input_ids"].dtype,
-                                    device=inputs["input_ids"].device)
-                inputs["input_ids"] = torch.cat(
-                    [inputs["input_ids"], tids], dim=-1)
-                if "attention_mask" in inputs:
-                    inputs["attention_mask"] = torch.cat(
-                        [inputs["attention_mask"],
-                         torch.ones_like(tids)], dim=-1)
-                if "mm_token_type_ids" in inputs:
-                    inputs["mm_token_type_ids"] = torch.cat(
-                        [inputs["mm_token_type_ids"],
-                         torch.zeros_like(tids)], dim=-1)
+            tk = self._processor.tokenizer.encode(
+                "<think>\n\n</think>\n\n", add_special_tokens=False)
+            tids = torch.tensor([tk], dtype=inputs["input_ids"].dtype,
+                                device=inputs["input_ids"].device)
+            inputs["input_ids"] = torch.cat([inputs["input_ids"], tids], dim=-1)
+            if "attention_mask" in inputs:
+                inputs["attention_mask"] = torch.cat(
+                    [inputs["attention_mask"], torch.ones_like(tids)], dim=-1)
+            if "mm_token_type_ids" in inputs:
+                inputs["mm_token_type_ids"] = torch.cat(
+                    [inputs["mm_token_type_ids"], torch.zeros_like(tids)], dim=-1)
 
         with torch.no_grad():
             out = self._model.generate(
@@ -274,13 +245,13 @@ class LocalModel:
                 output_scores=True, return_dict_in_generate=True)
 
         ilen = inputs["input_ids"].shape[1]
-        # If we manually injected think-block tokens, skip past them too.
         gen_ids = out.sequences[0, ilen:]
         gen_text = self._processor.decode(gen_ids, skip_special_tokens=True)
-        probs = self._extract_probs(out, gen_ids, False if no_reason else reason_first)
+        probs = self._extract_probs(out, gen_ids)
         return gen_text, probs
 
-    def _extract_probs(self, output, gen_ids, reason_first) -> dict[str, float] | None:
+    def _extract_probs(self, output, gen_ids) -> dict[str, float] | None:
+        """Extract sigmoid probabilities at the first label-token position."""
         import torch
         if not self._label_token_ids:
             return None
@@ -289,13 +260,13 @@ class LocalModel:
             id_set = set(self._label_token_ids.values())
             positions = [i for i, t in enumerate(gen_ids.tolist()) if t in id_set]
             if positions:
-                idx = positions[-1] if reason_first else positions[0]
+                idx = positions[0]
             else:
                 pad = self._processor.tokenizer.pad_token_id
-                np = [i for i, t in enumerate(gen_ids.tolist()) if t != pad]
-                if not np:
+                non_pad = [i for i, t in enumerate(gen_ids.tolist()) if t != pad]
+                if not non_pad:
                     return None
-                idx = np[-1] if reason_first else np[0]
+                idx = non_pad[0]
             return {c: round(float(scores[0, idx, t].item()), 4)
                     for c, t in self._label_token_ids.items()}
         except (RuntimeError, ValueError, IndexError) as e:
@@ -304,39 +275,24 @@ class LocalModel:
 
 
 def main():
-    p = argparse.ArgumentParser(description="SAGE inference (YuFeng style, sigmoid)")
-    p.add_argument("--model-path", required=True)
-    p.add_argument("--image", required=True)
-    p.add_argument("--download-source", default="auto", choices=["auto", "modelscope", "huggingface"])
-    p.add_argument("--lora-path", default="")
+    p = argparse.ArgumentParser(description="SAGE inference (base model + LoRA)")
+    p.add_argument("--model-path", required=True,
+                   help="Base model path or HuggingFace/ModelScope ID")
+    p.add_argument("--image", required=True, help="Path to the input image")
+    p.add_argument("--lora-path", default="", help="LoRA adapter path (optional)")
+    p.add_argument("--mode", choices=["no_reason", "reason"], default="no_reason",
+                   help="no_reason: output code only; reason: output code + explanation")
+    p.add_argument("--download-source", default="auto",
+                   choices=["auto", "modelscope", "huggingface"])
     p.add_argument("--device", default="cuda")
     p.add_argument("--dtype", default="bf16", choices=["bf16", "fp16", "fp32"])
-    p.add_argument("--reason-first", action="store_true", default=False,
-                   help="explain-then-classify (sigmoid at LAST label pos). "
-                        "Default False = classify-then-explain, matches the "
-                        "no_reason/reason_last training pipeline and YuFeng-XGuard.")
-    p.add_argument("--no-reason-first", dest="reason_first", action="store_false")
-    p.add_argument("--no-reason", action="store_true", default=False)
-    p.add_argument("--policy", default="")
-    p.add_argument("--think", action="store_true", default=False,
-                   help="enable model thinking mode (default: suppressed). "
-                        "When suppressed, Qwen3 skips chain-of-thought and "
-                        "outputs only the classification response.")
-    p.add_argument("--max-tokens", type=int, default=1024)
-    p.add_argument("--temperature", type=float, default=0.001)
     a = p.parse_args()
 
-    prompt = render_prompt(a.reason_first, a.policy or None, no_reason=a.no_reason)
-    mode = "no-reason" if a.no_reason else ("reason-first" if a.reason_first else "reason-last")
-    print(f"{'=' * 60}\nModel: {a.model_path} | mode={mode}\n{'=' * 60}\n{prompt}\n{'=' * 60}\n")
-
-    if not a.no_reason:
-        print("[warn] reason mode active. SAGE training data defaults to no_reason "
-              "(convert_to_swift.py --mode no_reason). If the model was trained in "
-              "no_reason mode, add --no-reason to match the training prompt.\n")
-    if a.think:
-        print("[info] thinking mode enabled; output will include chain-of-thought. "
-              "\n")
+    no_reason = (a.mode == "no_reason")
+    prompt = render_prompt(no_reason=no_reason)
+    print(f"{'=' * 60}\nModel: {a.model_path} | mode={a.mode}"
+          + (f" | LoRA: {a.lora_path}" if a.lora_path else "")
+          + f"\n{'=' * 60}\n{prompt}\n{'=' * 60}\n")
 
     from PIL import Image
     import io
@@ -352,9 +308,8 @@ def main():
     t0 = time.perf_counter()
     raw, probs = model.infer(
         image_bytes=buf.getvalue(), system_prompt=prompt,
-        max_tokens=1 if a.no_reason else a.max_tokens,
-        temperature=a.temperature, reason_first=a.reason_first,
-        no_reason=a.no_reason, think=a.think)
+        max_tokens=1 if no_reason else 1024,
+        no_reason=no_reason)
     ms = (time.perf_counter() - t0) * 1000
 
     r = parse_output(raw)
@@ -372,8 +327,8 @@ def main():
         print(f"Explanation: {r.explanation}")
     print("\nAll probabilities:")
     for code in BEHAVIOR_CODES:
-        p = r.probs.get(code, 0.0)
-        print(f"  {CODE_TO_NAME[code]:<12s} ({code}) {p:.4f} {'#' * int(p * 40)}")
+        prob = r.probs.get(code, 0.0)
+        print(f"  {CODE_TO_NAME[code]:<12s} ({code}) {prob:.4f} {'#' * int(prob * 40)}")
     print(f"\n{'=' * 60}\nRaw output:\n{raw}\n{'=' * 60}")
 
 

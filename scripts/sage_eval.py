@@ -1,111 +1,13 @@
 """
 SAGE Evaluation Script (based on sage_infer.py local VLM inference).
 
-Supports two modes:
-  1. Live inference:  loads LocalModel from sage_infer.py, runs on images, computes metrics.
-  2. Offline eval:     loads saved predictions JSON, computes metrics only.
+Loads a model (base or LoRA) via sage_infer.LocalModel, runs on images from a
+ground-truth file, and computes multi-label metrics.
 
-================================================================================
-  DATA FORMATS
-================================================================================
-
---- 1. Ground Truth (eval_gt.json) ---
-A JSON array. Each sample links an image to multi-label ground truth.
-
-  [
-    {
-      "sample_id": "20260324_0002",
-      "image_path": "data/studybuddy_eval/images/20260324_0002.jpg",
-      "labels": {
-        "normal": 1, "away": 0, "blocked": 0, "toy": 0, "phone": 0,
-        "snack": 0, "eyesclosed": 0, "prone": 0, "bowed": 0, "chinrest": 0,
-        "tilt": 0, "turn": 0, "slope": 0, "recline": 0, "lookup": 0
-      },
-      "primary_label": "normal"
-    },
-    ...
-  ]
-
-  Required fields:
-    sample_id     str   unique identifier
-    image_path    str   path to the image file (absolute or relative to cwd)
-    labels        dict  15 behavior-name -> 0/1 (multi-label ground truth)
-    primary_label str   the primary behavior (highest priority active label)
-
-  Optional fields:
-    source_weight       float  sample weight (default 1.0)
-    original_attention  str    original annotation metadata
-    original_posture    str    original annotation metadata
-    split               str    "train" | "val" | "test" (for filtering)
-
---- 2. Predictions (predictions.json) ---
-A JSON array produced by this script (or compatible external tool).
-Each entry is keyed by sample_id to match ground truth.
-
-  [
-    {
-      "sample_id": "20260324_0002",
-      "primary_label": "normal",
-      "probs": {
-        "normal": 0.9521, "away": 0.0210, "blocked": 0.0050, ...
-      },
-      "explanation": "Student sits upright with gaze on study materials.",
-      "latency_ms": 150.3,
-      "raw_output": "..."
-    },
-    ...
-  ]
-
-  Required fields:
-    sample_id      str   must match a ground-truth sample_id
-    primary_label  str   predicted primary behavior name
-    probs          dict  15 behavior-name -> sigmoid probability (0.0-1.0)
-
-  Optional fields:
-    explanation   str   model's natural-language justification
-    latency_ms    float  inference latency in milliseconds
-    raw_output    str   full raw model output
-    error         str   if inference failed (probs will be zero-filled)
-
-  Note: probs uses behavior NAME keys (not 2-letter codes).
-        sage_infer.py outputs code keys; this script converts them.
-
---- 3. Evaluation Report (eval_report.json) ---
-  {
-    "model": "Qwen/Qwen3.5-4B",
-    "mode": "reason-last",
-    "num_samples": 779,
-    "num_errors": 0,
-    "threshold": 0.5,
-    "overall": {
-      "macro_f1": 0.85,
-      "mAP": 0.90,
-      "ECE": 0.05,
-      "subset_accuracy": 0.72,
-      "hamming_loss": 0.03,
-      "primary_accuracy": 0.92
-    },
-    "per_class": {
-      "normal": {"precision": 0.95, "recall": 0.90, "f1": 0.92, "ap": 0.95, "support": 72},
-      ...
-    },
-    "latency": {"mean_ms": 150.3, "p50_ms": 145.0, "p95_ms": 200.0, "std_ms": 25.0},
-    "confusion_matrix": [[...15x15...]],
-    "confusion_labels": ["normal", "away", ...]
-  }
-
-================================================================================
-  USAGE
-================================================================================
-
-  # Live inference + metrics
-  python scripts/sage_eval.py --model-path Qwen/Qwen3.5-4B --gt data/sage_eval/eval_gt.json --output results/sage_eval/
-
-  # Offline metrics only (from saved predictions)
-  python scripts/sage_eval.py --gt data/sage_eval/eval_gt.json --predictions results/sage_eval/predictions.json --output results/sage_eval/
-
-  # Adjust threshold / bins without re-running inference
-  python scripts/sage_eval.py --gt data/sage_eval/eval_gt.json --predictions results/sage_eval/predictions.json --threshold 0.3 --ece-bins 15
+Usage:
+  python scripts/sage_eval.py --model-path Qwen/Qwen3.5-4B --gt data/sage_eval/eval_gt.json --output results/
+  python scripts/sage_eval.py --model-path Qwen/Qwen3.5-4B --lora-path ./lora --gt data/sage_eval/eval_gt.json --split test
+  python scripts/sage_eval.py --model-path Qwen/Qwen3.5-4B --gt data/sage_eval/eval_gt.json --mode reason --output results/
 """
 
 from __future__ import annotations
@@ -120,7 +22,6 @@ import numpy as np
 
 # -- Constants ---------------------------------------------------------------
 
-# Canonical 15 behavior label names (matches src/core/constants.py order).
 BEHAVIOR_NAMES = [
     "normal", "away", "blocked", "toy", "phone", "snack", "eyesclosed",
     "prone", "bowed", "chinrest", "tilt", "turn", "slope", "recline", "lookup",
@@ -129,7 +30,6 @@ BEHAVIOR_NAMES = [
 NAME_TO_INDEX = {name: i for i, name in enumerate(BEHAVIOR_NAMES)}
 NUM_CLASSES = len(BEHAVIOR_NAMES)
 
-# 2-letter code -> behavior name (matches sage_infer.py CODE_TO_NAME).
 CODE_TO_NAME = {
     "nr": "normal", "aw": "away", "bl": "blocked", "ty": "toy",
     "ph": "phone", "sn": "snack", "ec": "eyesclosed", "pr": "prone",
@@ -169,11 +69,7 @@ def average_precision(y_true: np.ndarray, y_score: np.ndarray) -> float:
 
 
 def compute_ece(probs: np.ndarray, labels: np.ndarray, n_bins: int = 10) -> float:
-    """Expected Calibration Error across all classes and samples.
-
-    probs:  (N, C) predicted probabilities
-    labels: (N, C) binary ground truth
-    """
+    """Expected Calibration Error across all classes and samples."""
     ece = 0.0
     n_total = 0
     for c in range(probs.shape[1]):
@@ -223,16 +119,6 @@ def load_ground_truth(path: str) -> list[dict]:
     return data
 
 
-def load_predictions(path: str) -> list[dict]:
-    with open(path, "r", encoding="utf-8") as f:
-        data = json.load(f)
-    for s in data:
-        s.setdefault("probs", {})
-        for name in BEHAVIOR_NAMES:
-            s["probs"].setdefault(name, 0.0)
-    return data
-
-
 def code_probs_to_name_probs(code_probs: dict) -> dict:
     """Convert sage_infer.py 2-letter-code probs to behavior-name probs."""
     out = {name: 0.0 for name in BEHAVIOR_NAMES}
@@ -265,23 +151,17 @@ def run_inference(
     device: str = "cuda",
     dtype: str = "bf16",
     download_source: str = "auto",
-    reason_first: bool = False,
     no_reason: bool = False,
-    policy: str = "",
-    max_tokens: int = 1024,
-    temperature: float = 0.001,
     image_root: str | None = None,
-    think: bool = False,
 ) -> list[dict]:
     """Run sage_infer.py LocalModel on all ground-truth images."""
-    # Lazy import: only needed for live inference.
     script_dir = Path(__file__).resolve().parent
     if str(script_dir) not in sys.path:
         sys.path.insert(0, str(script_dir))
     from sage_infer import LocalModel, parse_output, render_prompt  # type: ignore
 
-    prompt = render_prompt(reason_first=reason_first, policy=policy or None, no_reason=no_reason)
-    mode = "no-reason" if no_reason else ("reason-first" if reason_first else "reason-last")
+    prompt = render_prompt(no_reason=no_reason)
+    mode = "no_reason" if no_reason else "reason"
     print(f"[eval] mode={mode}, model={model_path}")
     print(f"[eval] {len(gt)} samples")
 
@@ -314,11 +194,8 @@ def run_inference(
             raw_text, probs = model.infer(
                 image_bytes=buf.getvalue(),
                 system_prompt=prompt,
-                max_tokens=1 if no_reason else max_tokens,
-                temperature=temperature,
-                reason_first=reason_first,
+                max_tokens=1 if no_reason else 1024,
                 no_reason=no_reason,
-                think=think,
             )
             ms = round((time.perf_counter() - t0) * 1000, 1)
 
@@ -346,7 +223,6 @@ def run_inference(
         if (idx + 1) % 20 == 0:
             print(f"  processed {idx + 1}/{len(gt)}, errors={errors}")
 
-    # Save predictions
     output_dir.mkdir(parents=True, exist_ok=True)
     pred_path = output_dir / "predictions.json"
     with open(pred_path, "w", encoding="utf-8") as f:
@@ -366,7 +242,6 @@ def compute_metrics(
     """Compute all metrics from ground truth and predictions."""
     pred_map = {p["sample_id"]: p for p in predictions}
 
-    # Build arrays
     labels = np.zeros((len(gt), NUM_CLASSES), dtype=np.float32)
     probs = np.zeros((len(gt), NUM_CLASSES), dtype=np.float32)
     gt_primary = np.zeros(len(gt), dtype=np.int32)
@@ -416,14 +291,11 @@ def compute_metrics(
         f1s.append(f1)
         aps.append(ap)
 
-    # Multi-label overall metrics
     macro_f1 = float(np.mean(f1s))
     mAP = float(np.mean(aps))
     ece = compute_ece(probs, labels, ece_bins)
     subset_acc = float(np.mean(np.all(preds_binary == labels, axis=1)))
     hamming = float(np.mean(preds_binary != labels))
-
-    # Primary-label metrics
     primary_acc = float(np.mean(pred_primary == gt_primary))
     cm = confusion_matrix(gt_primary, pred_primary, NUM_CLASSES)
 
@@ -476,10 +348,9 @@ def print_report(report: dict) -> None:
     print()
 
 
-def save_report(report: dict, output_dir: Path, tag: str = "") -> None:
+def save_report(report: dict, output_dir: Path) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
-    name = f"eval_report{('_' + tag) if tag else ''}.json"
-    path = output_dir / name
+    path = output_dir / "eval_report.json"
     with open(path, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
     print(f"[eval] report saved -> {path}")
@@ -491,41 +362,28 @@ def save_report(report: dict, output_dir: Path, tag: str = "") -> None:
 
 def main():
     p = argparse.ArgumentParser(
-        description="SAGE evaluation (sage_infer.py local VLM style)")
+        description="SAGE evaluation (live inference via sage_infer)")
     p.add_argument("--gt", required=True, help="Ground truth JSON file path")
-    p.add_argument("--predictions", default="",
-                   help="Pre-computed predictions JSON (offline mode). "
-                        "If omitted, runs live inference.")
+    p.add_argument("--model-path", required=True,
+                   help="Base model path or HuggingFace/ModelScope ID")
+    p.add_argument("--lora-path", default="", help="LoRA adapter path (optional)")
+    p.add_argument("--mode", choices=["no_reason", "reason"], default="no_reason",
+                   help="no_reason: code only; reason: code + explanation")
+    p.add_argument("--split", default="",
+                   help="Filter GT by split field (e.g. 'test'). Empty = all samples.")
     p.add_argument("--output", default="results/sage_eval",
                    help="Output directory for predictions and report")
     p.add_argument("--threshold", type=float, default=0.5,
                    help="Binary decision threshold for P/R/F1")
-    p.add_argument("--ece-bins", type=int, default=10,
-                   help="Number of bins for ECE calculation")
-    p.add_argument("--tag", default="", help="Tag appended to report filename")
-
-    # Live inference args (ignored in offline mode)
-    p.add_argument("--model-path", default="", help="Model path or HuggingFace/ModelScope ID")
-    p.add_argument("--lora-path", default="")
-    p.add_argument("--download-source", default="auto", choices=["auto", "modelscope", "huggingface"])
+    p.add_argument("--download-source", default="auto",
+                   choices=["auto", "modelscope", "huggingface"])
     p.add_argument("--device", default="cuda")
     p.add_argument("--dtype", default="bf16", choices=["bf16", "fp16", "fp32"])
-    p.add_argument("--reason-first", action="store_true", default=False,
-                   help="explain-then-classify; default False = classify-then-explain "
-                        "(matches training pipeline and YuFeng-XGuard)")
-    p.add_argument("--no-reason-first", dest="reason_first", action="store_false")
-    p.add_argument("--no-reason", action="store_true", default=False)
-    p.add_argument("--policy", default="")
-    p.add_argument("--think", action="store_true", default=False,
-                   help="enable model thinking mode (default: suppressed).")
-    p.add_argument("--max-tokens", type=int, default=1024)
-    p.add_argument("--temperature", type=float, default=0.001)
     p.add_argument("--image-root", default="",
                    help="Root dir for resolving relative image_path in GT")
-    p.add_argument("--split", default="",
-                   help="Filter GT by split field (e.g. 'test'). Empty = use all samples.")
     a = p.parse_args()
 
+    no_reason = (a.mode == "no_reason")
     output_dir = Path(a.output)
     gt = load_ground_truth(a.gt)
     if a.split:
@@ -533,32 +391,19 @@ def main():
         print(f"[eval] filtered to split='{a.split}': {len(gt)} samples")
     print(f"[eval] loaded {len(gt)} ground-truth samples from {a.gt}")
 
-    if a.predictions:
-        predictions = load_predictions(a.predictions)
-        print(f"[eval] loaded {len(predictions)} predictions from {a.predictions}")
-    elif a.model_path:
-        predictions = run_inference(
-            gt=gt, model_path=a.model_path, output_dir=output_dir,
-            lora_path=a.lora_path or None, device=a.device, dtype=a.dtype,
-            download_source=a.download_source, reason_first=a.reason_first,
-            no_reason=a.no_reason, policy=a.policy, max_tokens=a.max_tokens,
-            temperature=a.temperature, image_root=a.image_root or None,
-            think=a.think,
-        )
-    else:
-        p.error("either --predictions (offline) or --model-path (live) is required")
+    predictions = run_inference(
+        gt=gt, model_path=a.model_path, output_dir=output_dir,
+        lora_path=a.lora_path or None, device=a.device, dtype=a.dtype,
+        download_source=a.download_source, no_reason=no_reason,
+        image_root=a.image_root or None,
+    )
 
-    report = compute_metrics(gt, predictions, a.threshold, a.ece_bins)
-    if a.model_path:
-        report["model"] = a.model_path
-        report["mode"] = ("no-reason" if a.no_reason
-                           else ("reason-first" if a.reason_first else "reason-last"))
-    elif a.predictions:
-        report["model"] = "loaded_from_predictions"
-        report["mode"] = "offline"
+    report = compute_metrics(gt, predictions, a.threshold)
+    report["model"] = a.model_path
+    report["mode"] = a.mode
 
     print_report(report)
-    save_report(report, output_dir, a.tag)
+    save_report(report, output_dir)
 
 
 if __name__ == "__main__":

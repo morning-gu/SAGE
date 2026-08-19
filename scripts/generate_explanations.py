@@ -9,19 +9,16 @@ Tier 2 (redirect):    Model picked a co-occurring label (in GT labels but
 Tier 3 (forced):      Model completely disagreed. Label-conditioned generation
                       + verification. -> forced_match / forced_mismatch
 
-Verification tags stored in `verification` field:
-  free_match         - Tier 1 passed
-  redirect_match     - Tier 2 redirect + verify passed
-  redirect_mismatch  - Tier 2 redirect but verify failed -> template fallback
-  forced_match       - Tier 3 forced + verify passed
-  forced_mismatch    - Tier 3 forced but verify failed -> template fallback
+Output is written to {input_dir}/{input_stem}_with_explanations.json.
+Existing explanation fields in the INPUT file are always ignored and
+regenerated. Resume support: if the OUTPUT file already exists and --resume
+is passed, samples with model_code are skipped.
 
 Usage:
-  python scripts/generate_explanations.py --dry-run
-  python scripts/generate_explanations.py
-  python scripts/generate_explanations.py --split train --workers 2
-  python scripts/generate_explanations.py --resume
-  python scripts/generate_explanations.py --force
+  python scripts/generate_explanations.py --annotations data/sage_eval/annotations_v3.json
+  python scripts/generate_explanations.py --annotations data/sage_eval/annotations_v3.json --resume
+  python scripts/generate_explanations.py --annotations data/sage_eval/annotations_v3.json --dry-run
+  python scripts/generate_explanations.py --annotations data/sage_eval/annotations_v3.json --split train --workers 2
 """
 
 from __future__ import annotations
@@ -31,12 +28,15 @@ from pathlib import Path
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-import requests, urllib3
+import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from sage_infer import render_prompt, parse_output, CODE_TO_NAME, BEHAVIOR_CODES
 
 NAME_TO_CODE = {v: k for k, v in CODE_TO_NAME.items()}
+
+# Fields to strip from the INPUT annotations (always regenerate explanations).
+RESULT_FIELDS = ("explanation", "model_code", "model_label", "verification", "raw_output")
 
 # Raised when Dashscope's input data inspection rejects an image
 # (data_inspection_failed, HTTP 400). This is deterministic per image, so it
@@ -44,9 +44,9 @@ NAME_TO_CODE = {v: k for k, v in CODE_TO_NAME.items()}
 class ContentBlocked(Exception):
     pass
 
-# Raised when a corporate NTLM proxy (e.g. realm "Pinacolada") SSL-intercepts
-# traffic to the API host and returns an auth challenge / HTML login page
-# instead of forwarding the request. Not retryable; the whole run should stop.
+# Raised when a corporate NTLM proxy SSL-intercepts traffic to the API host
+# and returns an auth challenge / HTML login page instead of forwarding the
+# request. Not retryable; the whole run should stop.
 class ProxyBlocked(Exception):
     pass
 
@@ -105,13 +105,7 @@ def resolve_image_path(sample, images_dir, image_ext=".jpg"):
 
 
 def _detect_windows_proxy():
-    """Read the Windows system proxy from the registry (HKCU Internet Settings).
-
-    Python's urllib.request.getproxies() short-circuits on the environment dict
-    when `no_proxy` is set, so it never reads the registry and `requests` ends up
-    with NO proxy -> direct connection -> blocked by the corp gateway. Reading
-    the registry directly bypasses that bug. Returns a URL string or None.
-    """
+    """Read the Windows system proxy from the registry (HKCU Internet Settings)."""
     try:
         import winreg
     except ImportError:
@@ -126,7 +120,6 @@ def _detect_windows_proxy():
         winreg.CloseKey(key)
     except OSError:
         return None
-    # ProxyServer may be "host:port" or "http=host:port;https=host:port"
     if "=" in server:
         for part in server.split(";"):
             if part.startswith(("https=", "http=")):
@@ -184,16 +177,9 @@ def _extract_answer(text):
 
 
 def _call_api(api_url, api_key, model, image_b64, sys_prompt, user_content,
-              max_retries=3, timeout=180, max_tokens=1024, verify=True,
+              max_retries=3, timeout=180, max_tokens=1024,
               proxies=None):
-    """Generic API call. Returns raw model output text, or None on failure.
-
-    Raises ContentBlocked when Dashscope's input data inspection rejects the
-    image (data_inspection_failed). That result is deterministic, so it is not
-    retried; the caller should fall back to a template explanation.
-    """
-    if not verify:
-        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+    """Generic API call. Returns raw model output text, or None on failure."""
     payload = {
         "model": model,
         "messages": [
@@ -210,14 +196,11 @@ def _call_api(api_url, api_key, model, image_b64, sys_prompt, user_content,
     for attempt in range(max_retries):
         try:
             resp = requests.post(api_url, json=payload, headers=headers,
-                                 timeout=timeout, verify=verify, proxies=proxies)
+                                 timeout=timeout, proxies=proxies)
             if resp.status_code != 200:
                 body = resp.text[:500]
-                # Content moderation is deterministic: never retry, signal caller.
                 if "data_inspection_failed" in body:
                     raise ContentBlocked(f"HTTP {resp.status_code}: {body}")
-                # Corporate proxy intercepting external hosts: detect the NTLM
-                # auth challenge or an HTML login page (the real API is JSON).
                 auth_hdr = (resp.headers.get("WWW-Authenticate", "")
                             + resp.headers.get("Proxy-Authenticate", ""))
                 low = body.lstrip().lower()
@@ -236,7 +219,6 @@ def _call_api(api_url, api_key, model, image_b64, sys_prompt, user_content,
             raise
         except Exception as e:
             status = resp.status_code if resp is not None else None
-            # Retry only transient conditions: network failure, 429, or 5xx.
             retryable = status is None or status == 429 or status >= 500
             if retryable and attempt < max_retries - 1:
                 wait = 2 ** (attempt + 1)
@@ -264,7 +246,6 @@ def _verify(api_url, api_key, model, image_b64, explanation, gt_primary, **kw):
             f'Does the explanation accurately describe visible physical evidence '
             f'in the image that supports this behavior?\n'
             f'Answer ONLY: YES or NO.')
-    # kw carries the global max_tokens; override it locally without duplicating.
     vkw = {k: v for k, v in kw.items() if k != "max_tokens"}
     raw = _call_api(api_url, api_key, model, image_b64, VERIFY_SYSTEM,
                     _image_content(image_b64, text),
@@ -289,10 +270,6 @@ def process_sample(sample, api_url, api_key, model, sys_prompt, images_dir, **kw
         raw = _call_api(api_url, api_key, model, img_b64, sys_prompt,
                         _image_content(img_b64, FREE_USER_MSG), **kw)
     except ContentBlocked as e:
-        # Image rejected by Dashscope content moderation (false positive on
-        # classroom scenes). Fall back to a template explanation built from
-        # the label definition so the sample stays usable for SFT and is
-        # skipped on --resume.
         print(f"    [content-blocked] {sample['sample_id']}: {e}")
         definition = LABEL_DEFS.get(gt_primary, "the labeled behavior")
         return sample["sample_id"], {
@@ -412,7 +389,6 @@ def _print_summary(samples):
     print(f"  Content-blocked fallback:{tiers.get('content_blocked', 0):>4d} ({100*tiers.get('content_blocked',0)/n:.1f}%)")
     print(f"  Training-ready (has expl): {with_expl}/{n} ({100*with_expl/n:.1f}%)")
 
-    # Per-class accuracy (Tier 1 only)
     by_class = {}
     for s in processed:
         gt = s.get("primary_label", "?")
@@ -440,49 +416,55 @@ def _print_summary(samples):
             print(f"  {gt:<14s} -> {model:<14s}  ({count})")
 
 
+def _derive_output_path(annotations_path):
+    """Derive output path: {stem}_with_explanations.json in the same directory."""
+    p = Path(annotations_path)
+    return p.parent / f"{p.stem}_with_explanations.json"
+
+
 def main():
     ap = argparse.ArgumentParser(
         description="Generate per-sample <explanation> via three-tier progressive strategy.")
-    ap.add_argument("--annotations", default="data/sage_eval/annotations.json")
+    ap.add_argument("--annotations", required=True,
+                    help="Input annotations JSON file")
     ap.add_argument("--images-dir", default="data/sage_eval/images")
-    ap.add_argument("--output", default="data/sage_eval/annotations_with_explanations.json")
-    ap.add_argument("--model", default="qwen3.7-plus")
+    ap.add_argument("--model", default="qwen3.7-plus",
+                    help="VLM model name for API calls")
+    ap.add_argument("--base-url",
+                    default="https://dashscope.aliyuncs.com/compatible-mode/v1",
+                    help="VLM API base URL")
+    ap.add_argument("--api-key", default="")
     ap.add_argument("--max-tokens", type=int, default=1024)
-    ap.add_argument("--reason-first", action="store_true")
-    ap.add_argument("--split", default="")
-    ap.add_argument("--sample", default="")
+    ap.add_argument("--split", default="", help="Filter by split field")
+    ap.add_argument("--sample", default="", help="Process only this sample_id")
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--max-retries", type=int, default=3)
     ap.add_argument("--timeout", type=int, default=180)
-    ap.add_argument("--save-every", type=int, default=1)
-    ap.add_argument("--base-url", default="https://dashscope.aliyuncs.com/compatible-mode/v1")
-    # Proxy for reaching external hosts through a corp gateway. Defaults to the
-    # Windows system proxy (registry); use --proxy none to force direct.
-    ap.add_argument("--proxy", default=None)
-    ap.add_argument("--api-key", default="sk-ws-H.EMDXIIE.2VpQ.MEUCIQDoT1T0cs_Z4gMPl07Lvqt7SIJcjmL2HnVaqgA-s1c4XQIgI3RPNFp6ZkgwynG7uAzQGTIyhSK0o-nNUAYDO1PHwxA")
-    # NB: default False (verify ON). Turning verify OFF masks a MITM proxy's
-    # interception cert, which hides the real cause of 401/400 failures.
-    ap.add_argument("--no-verify-ssl", default=False, action="store_true")
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--resume", action="store_true")
-    # Reprocess every sample, ignoring any existing model_code (e.g. the
-    # input file already carried results). Samples that fail again keep
-    # their previous model_code rather than losing it.
+    ap.add_argument("--resume", action="store_true",
+                    help="Skip samples already processed (have model_code) in the output file")
     ap.add_argument("--force", action="store_true",
-                    help="reprocess all samples even if model_code is set")
+                    help="Reprocess all samples even if model_code is set")
     a = ap.parse_args()
 
-    sys_prompt = render_prompt(reason_first=a.reason_first, policy=None, no_reason=False)
-    mode = "reason-first" if a.reason_first else "reason-last"
-    proxy_url = a.proxy if a.proxy is not None else _detect_windows_proxy()
-    if proxy_url and proxy_url.lower() in ("none", "direct", "off"):
-        proxy_url = None
+    # Always use reason mode (code + explanation) for the system prompt.
+    sys_prompt = render_prompt(no_reason=False)
+    output_path = _derive_output_path(a.annotations)
+
+    proxy_url = _detect_windows_proxy()
     proxies = ({"http": proxy_url, "https": proxy_url} if proxy_url else None)
     kw = dict(max_retries=a.max_retries, timeout=a.timeout,
-              max_tokens=a.max_tokens, verify=not a.no_verify_ssl, proxies=proxies)
+              max_tokens=a.max_tokens, proxies=proxies)
 
     with open(a.annotations, encoding="utf-8") as f:
         samples = json.load(f)
+
+    # Always strip existing result fields from the INPUT annotations -- we
+    # regenerate explanations regardless of what the input file carries.
+    for s in samples:
+        for k in RESULT_FIELDS:
+            s.pop(k, None)
+
     if a.split:
         samples = [s for s in samples if s.get("split") == a.split]
         print(f"Filtered to split='{a.split}': {len(samples)} samples")
@@ -492,37 +474,34 @@ def main():
             print(f"Sample '{a.sample}' not found.")
             return
 
-    if a.resume and Path(a.output).exists():
-        with open(a.output, encoding="utf-8") as f:
+    # Resume: load results from the output file and merge into samples.
+    if a.resume and output_path.exists():
+        with open(output_path, encoding="utf-8") as f:
             prev = json.load(f)
         existing = {s["sample_id"]: s for s in prev if s.get("model_code")}
         for s in samples:
             if s["sample_id"] in existing:
                 e = existing[s["sample_id"]]
-                for k in ("explanation", "model_code", "model_label",
-                         "verification", "raw_output"):
+                for k in RESULT_FIELDS:
                     if k in e:
                         s[k] = e[k]
-        print(f"[resume] loaded {len(existing)} existing results")
+        print(f"[resume] loaded {len(existing)} existing results from {output_path}")
 
     if a.force:
-        # --force overrides the "has model_code => done" gate so samples
-        # stuck with model_code but no explanation (or stale results) get
-        # regenerated. --resume may still prime non-result fields, but
-        # force decides the todo list.
         todo = list(samples)
         print("[force] reprocessing all samples regardless of existing model_code")
     else:
         todo = [s for s in samples if not s.get("model_code")]
     print(f"Total: {len(samples)}, done: {len(samples)-len(todo)}, to process: {len(todo)}")
+    print(f"Output: {output_path}")
     if not todo:
         print("Nothing to do.")
-        save_output(samples, a.output)
+        save_output(samples, output_path)
         _print_summary(samples)
         return
     if a.dry_run:
         est = estimate_cost(len(todo), a.model)
-        print(f"\nDry run (model={a.model}, mode={mode}):")
+        print(f"\nDry run (model={a.model}):")
         print(f"  Input tokens:  ~{est['input_tokens']:,}")
         print(f"  Output tokens: ~{est['output_tokens']:,}")
         if "cost" in est:
@@ -531,10 +510,10 @@ def main():
 
     api_key = a.api_key or os.environ.get("OPENAI_API_KEY", "")
     if not api_key:
-        print("ERROR: no API key.")
+        print("ERROR: no API key. Pass --api-key or set OPENAI_API_KEY.")
         sys.exit(1)
     api_url = _build_api_url(a.base_url)
-    print(f"[api] url={api_url}  model={a.model}  mode={mode}")
+    print(f"[api] url={api_url}  model={a.model}")
     print(f"[proxy] {proxy_url or 'direct (no proxy)'}")
 
     images_dir = Path(a.images_dir)
@@ -558,10 +537,9 @@ def main():
             except ProxyBlocked as e:
                 print(f"\n[abort] {e}")
                 print("[abort] Stopping: requests to the API are being blocked by a "
-                      "network proxy (NTLM auth challenge / HTML login page). Re-run "
-                      "with an internal --base-url host already in NO_PROXY, or route "
-                      "via a local NTLM relay (cntlm) / off-network. No samples lost "
-                      "(use --resume).")
+                      "network proxy. Re-run with an internal --base-url host already "
+                      "in NO_PROXY, or route via a local NTLM relay (cntlm) / off-network. "
+                      "No samples lost (use --resume).")
                 for f in future_to_sample:
                     f.cancel()
                 break
@@ -577,22 +555,22 @@ def main():
                 errors += 1
                 print(f"  ERROR {sid}: {err}")
             completed += 1
-            if completed % a.save_every == 0:
-                save_output(samples, a.output)
+            if completed % 10 == 0:
+                save_output(samples, output_path)
                 elapsed = time.perf_counter() - t0
                 rate = completed / elapsed if elapsed > 0 else 0
                 eta = (len(todo) - completed) / rate if rate > 0 else 0
                 print(f"  [{completed}/{len(todo)}] {rate:.1f}/s, errors={errors}, ETA={eta:.0f}s")
 
-    save_output(samples, a.output)
+    save_output(samples, output_path)
     elapsed = time.perf_counter() - t0
     print(f"\n{'=' * 60}")
     print(f"Processed: {completed-errors}/{len(todo)} succeeded, {errors} failed")
     print(f"Time: {elapsed:.1f}s")
     _print_summary(samples)
-    print(f"\nOutput: {a.output}")
+    print(f"\nOutput: {output_path}")
     print(f"\n{'=' * 60}")
-    print(f"Next: python scripts/convert_to_swift.py --mode {mode} --annotations {a.output}")
+    print(f"Next: python scripts/convert_to_swift.py --mode reason --annotations {output_path}")
 
 
 if __name__ == "__main__":
