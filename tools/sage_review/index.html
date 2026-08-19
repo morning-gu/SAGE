@@ -173,7 +173,7 @@ select.sel:focus{border-color:var(--accent)}
 .chip.on .pri.on{color:#fff}
 .chip.g-normal{--c:var(--normal)}
 .chip.g-away,.chip.g-toy,.chip.g-phone,.chip.g-snack{--c:var(--distraction)}
-.chip.g-sleepy{--c:var(--drowsy)}
+.chip.g-eyesclosed{--c:var(--drowsy)}
 .chip.g-prone,.chip.g-bowed,.chip.g-chinrest,.chip.g-tilt,.chip.g-turn,
 .chip.g-slope,.chip.g-recline,.chip.g-lookup{--c:var(--posture)}
 .chip.g-blocked{--c:var(--block)}
@@ -329,7 +329,7 @@ const LABELS=[
   {key:"toy",zh:"玩玩具",group:"toy",sc:"3"},
   {key:"phone",zh:"玩电子设备",group:"phone",sc:"4"},
   {key:"snack",zh:"吃零食",group:"snack",sc:"5"},
-  {key:"sleepy",zh:"闭眼",group:"sleepy",sc:"6"},
+  {key:"eyesclosed",zh:"闭眼",group:"eyesclosed",sc:"6"},
   {key:"prone",zh:"趴桌",group:"prone",sc:"7"},
   {key:"bowed",zh:"低头",group:"bowed",sc:"8"},
   {key:"chinrest",zh:"托腮",group:"chinrest",sc:"9"},
@@ -341,9 +341,9 @@ const LABELS=[
   {key:"blocked",zh:"遮挡",group:"blocked",sc:"T"},
 ];
 const BYKEY=Object.fromEntries(LABELS.map(l=>[l.key,l]));
-const GROUPCOLOR={normal:"var(--normal)",away:"var(--distraction)",toy:"var(--distraction)",phone:"var(--distraction)",snack:"var(--distraction)",sleepy:"var(--drowsy)",prone:"var(--posture)",bowed:"var(--posture)",chinrest:"var(--posture)",tilt:"var(--posture)",turn:"var(--posture)",slope:"var(--posture)",recline:"var(--posture)",lookup:"var(--posture)",blocked:"var(--block)"};
+const GROUPCOLOR={normal:"var(--normal)",away:"var(--distraction)",toy:"var(--distraction)",phone:"var(--distraction)",snack:"var(--distraction)",eyesclosed:"var(--drowsy)",prone:"var(--posture)",bowed:"var(--posture)",chinrest:"var(--posture)",tilt:"var(--posture)",turn:"var(--posture)",slope:"var(--posture)",recline:"var(--posture)",lookup:"var(--posture)",blocked:"var(--block)"};
 const STNAME={unreviewed:"未审",correct:"正确",corrected:"已改",flagged:"待复核"};
-const SHORTCUTS=[["1","normal"],["2","away"],["3","toy"],["4","phone"],["5","snack"],["6","sleepy"],["7","prone"],["8","bowed"],["9","chinrest"],["0","tilt"],["q","turn"],["w","slope"],["e","recline"],["r","lookup"],["t","blocked"]];
+const SHORTCUTS=[["1","normal"],["2","away"],["3","toy"],["4","phone"],["5","snack"],["6","eyesclosed"],["7","prone"],["8","bowed"],["9","chinrest"],["0","tilt"],["q","turn"],["w","slope"],["e","recline"],["r","lookup"],["t","blocked"]];
 const SCMAP=Object.fromEntries(SHORTCUTS);
 
 const $=s=>document.querySelector(s);

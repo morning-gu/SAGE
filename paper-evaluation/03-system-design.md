@@ -44,7 +44,7 @@ Layer 2: 小模型复检层（单帧内验证）
 | 3 | 玩玩具 | toy | "toy" |
 | 4 | 玩电子设备 | phone | "phone" |
 | 5 | 吃零食 | snack | "snack" |
-| 6 | 闭眼 | sleepy | "sleepy" |
+| 6 | 闭眼 | eyesclosed | "eyesclosed" |
 | 7 | 趴桌 | prone | "prone" |
 | 8 | 低头 | bowed | "bowed" |
 | 9 | 斜肩 | slope | "slope" |
@@ -158,7 +158,7 @@ Tier 2 触发场景：置信度灰色区间(0.3-0.7)、小模型复检冲突、�
 | 现有模块 | 角色 | 验证行为 |
 |---|---|---|
 | PostureDetectionProcessor (C++) | 坐姿几何验证 | prone/bowed/tilt/slope/lookup/chinrest/recline |
-| AttentionDetectionProcessor (C++) | 头部姿态验证 | sleepy/turn |
+| AttentionDetectionProcessor (C++) | 头部姿态验证 | eyesclosed/turn |
 | position_detection_rule.py | 离座验证 | away |
 | 深度服务 | 遮挡校正 | slope |
 | VLM 32B 输出 | 物品验证 | phone/toy/snack |

@@ -28,7 +28,7 @@
 | 3 | 玩玩具 | toy | 手持非学习物品玩耍 |
 | 4 | 玩电子设备 | phone | 手持手机/平板，视线在屏幕 |
 | 5 | 吃零食 | snack | 手持食物，靠近嘴部 |
-| 6 | 闭眼 | sleepy | 眼睛闭合（单帧，眨眼也算） |
+| 6 | 闭眼 | eyesclosed | 眼睛闭合（单帧，眨眼也算） |
 | 7 | 趴桌 | prone | 上身前倾超45度，头部贴近桌面 |
 | 8 | 低头 | bowed | 头部明显前倾，鼻尖低于肩部连线 |
 | 9 | 斜肩 | slope | 肩部左右明显不水平 |
@@ -95,7 +95,7 @@
 | prone/bowed | 各50 |
 | tilt/slope/lookup/recline/chinrest | 各30 |
 | toy/phone/snack | 各30 |
-| sleepy/turn | 各30 |
+| eyesclosed/turn | 各30 |
 | **总帧数** | **800** |
 
 ### 划分策略

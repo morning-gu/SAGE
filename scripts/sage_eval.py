@@ -18,7 +18,7 @@ A JSON array. Each sample links an image to multi-label ground truth.
       "image_path": "data/studybuddy_eval/images/20260324_0002.jpg",
       "labels": {
         "normal": 1, "away": 0, "blocked": 0, "toy": 0, "phone": 0,
-        "snack": 0, "sleepy": 0, "prone": 0, "bowed": 0, "chinrest": 0,
+        "snack": 0, "eyesclosed": 0, "prone": 0, "bowed": 0, "chinrest": 0,
         "tilt": 0, "turn": 0, "slope": 0, "recline": 0, "lookup": 0
       },
       "primary_label": "normal"
@@ -122,7 +122,7 @@ import numpy as np
 
 # Canonical 15 behavior label names (matches src/core/constants.py order).
 BEHAVIOR_NAMES = [
-    "normal", "away", "blocked", "toy", "phone", "snack", "sleepy",
+    "normal", "away", "blocked", "toy", "phone", "snack", "eyesclosed",
     "prone", "bowed", "chinrest", "tilt", "turn", "slope", "recline", "lookup",
 ]
 
@@ -132,7 +132,7 @@ NUM_CLASSES = len(BEHAVIOR_NAMES)
 # 2-letter code -> behavior name (matches sage_infer.py CODE_TO_NAME).
 CODE_TO_NAME = {
     "nr": "normal", "aw": "away", "bl": "blocked", "ty": "toy",
-    "ph": "phone", "sn": "snack", "sp": "sleepy", "pr": "prone",
+    "ph": "phone", "sn": "snack", "ec": "eyesclosed", "pr": "prone",
     "bw": "bowed", "cr": "chinrest", "tl": "tilt", "tn": "turn",
     "sl": "slope", "rc": "recline", "lu": "lookup",
 }

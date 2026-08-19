@@ -60,7 +60,7 @@ LABEL_DEFS = {
     "toy": "playing with non-study toys, excluding study items",
     "phone": "holding electronic device, face clearly facing screen",
     "snack": "holding food, handling snack packaging, or eating",
-    "sleepy": "eyes closed",
+    "eyesclosed": "eyes closed",
     "prone": "upper body slumped onto desk, head resting on desk or arms",
     "bowed": "head clearly lowered or face down, not touching desk",
     "chinrest": "both hands, elbows on desk, supporting chin or cheek; single hand doesn't count",

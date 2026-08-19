@@ -54,7 +54,7 @@ LABEL_EXPLANATION = {
     "toy":      "The student is playing with non-study toys, excluding study-dependent items.",
     "phone":    "The student is holding an electronic device with face clearly facing the screen.",
     "snack":    "The student is holding food, handling snack packaging, or eating.",
-    "sleepy":   "The student's eyes are closed.",
+    "eyesclosed":   "The student's eyes are closed.",
     "prone":    "The upper body is slumped onto the desk, head resting on the desk or arms.",
     "bowed":    "The head is clearly lowered or face down, not touching the desk.",
     "chinrest": "Both hands with elbows on the desk support the chin or cheek; a single hand does not count.",

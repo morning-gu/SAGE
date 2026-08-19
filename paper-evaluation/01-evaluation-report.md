@@ -17,7 +17,7 @@
 
 经过四轮设计迭代（统一维度 -> 微调 4B -> 借鉴 YuFeng-XGuard -> 单帧聚焦），确定的最终架构：
 
-1. **统一维度**：15 个原子行为（normal/away/blocked/toy/phone/snack/sleepy/prone/bowed/slope/recline/lookup/tilt/turn/chinrest），替代原来的三维独立分类（座位/坐姿/注意力）
+1. **统一维度**：15 个原子行为（normal/away/blocked/toy/phone/snack/eyesclosed/prone/bowed/slope/recline/lookup/tilt/turn/chinrest），替代原来的三维独立分类（座位/坐姿/注意力）
 2. **微调 Qwen3-VL-4B**：LoRA 微调，classify-then-explain 训练格式，首 token 输出主导行为 + sigmoid 输出每类别置信度
 3. **单帧检测**：模型只处理单帧图像，专注单帧视觉理解，不涉及时序推理
 4. **大小模型复检**：VLM 提议 -> 骨骼几何/深度/物品检测等小模型验证 -> 调整置信度或否决

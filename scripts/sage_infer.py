@@ -15,18 +15,18 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 BEHAVIOR_CODES = [
-    "nr", "aw", "bl", "ty", "ph", "sn", "sp", "pr", "bw", "cr",
+    "nr", "aw", "bl", "ty", "ph", "sn", "ec", "pr", "bw", "cr",
     "tl", "tn", "sl", "rc", "lu",
 ]
 
 CODE_TO_NAME = {
     "nr": "normal", "aw": "away", "bl": "blocked", "ty": "toy",
-    "ph": "phone", "sn": "snack", "sp": "sleepy", "pr": "prone",
+    "ph": "phone", "sn": "snack", "ec": "eyesclosed", "pr": "prone",
     "bw": "bowed", "cr": "chinrest", "tl": "tilt", "tn": "turn",
     "sl": "slope", "rc": "recline", "lu": "lookup",
 }
 
-# Note: sp (eyes closed) and tn (head turned) are atomic primitives. The compound
+# Note: ec (eyes closed) and tn (head turned) are atomic primitives. The compound
 # concepts "sleeping" (pr/bw head-on-desk + eyes-closed-or-not-visible) and
 # "looking around" (tn/lu + clearly not in learning state) are composed by business
 # logic over multiple primitive probabilities, not emitted as model categories.
@@ -54,7 +54,7 @@ Your task is to classify the provided student image into the most appropriate ca
 - ty: playing with toys (hands manipulating non-study toys, excluding study-dependent items)
 - ph: using an electronic device (holding the device, face clearly facing the screen)
 - sn: eating snacks (holding food, or handling snack packaging, or eating)
-- sp: eyes closed
+- ec: eyes closed
 - pr: lying on the desk (upper body slumped onto the desk, head resting on the desk or arms)
 - bw: head down (head clearly lowered or face down, not touching the desk)
 - cr: chin resting (both hands with elbows on the desk supporting the chin or cheek; a single hand does not count)
