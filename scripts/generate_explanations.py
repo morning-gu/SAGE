@@ -51,22 +51,23 @@ class ProxyBlocked(Exception):
 
 # --- Label definitions (for forced prompt) ---
 
+# Keep in sync with sage_infer.py SYSTEM_TEMPLATE (single source of truth).
 LABEL_DEFS = {
     "normal": "upright posture, gaze on study materials",
     "away": "nobody in frame or not at desk",
-    "blocked": "frame occluded >50%",
-    "toy": "holding non-study items, playing",
-    "phone": "holding phone/tablet, gaze on screen",
-    "snack": "holding food near mouth",
+    "blocked": "body >50% occluded or face occluded, behavior undeterminable",
+    "toy": "playing with non-study toys, excluding study items",
+    "phone": "holding electronic device, face clearly facing screen",
+    "snack": "holding food, handling snack packaging, or eating",
     "sleepy": "eyes closed",
-    "prone": "upper body leaning >45 deg, head near desk",
-    "bowed": "nose below shoulder line",
-    "chinrest": "both hands supporting chin or cheek",
+    "prone": "upper body slumped onto desk, head resting on desk or arms",
+    "bowed": "head clearly lowered or face down, not touching desk",
+    "chinrest": "both hands, elbows on desk, supporting chin or cheek; single hand doesn't count",
     "tilt": "head noticeably leaning left or right",
-    "turn": "head turned to the side",
+    "turn": "head noticeably turned to one side",
     "slope": "shoulders noticeably not level",
     "recline": "body leaning back against chair",
-    "lookup": "head noticeably tilted back",
+    "lookup": "face clearly upward, chin raised",
 }
 
 FREE_USER_MSG = "Analyze the student's behavior and provide your classification."

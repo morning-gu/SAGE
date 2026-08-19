@@ -46,22 +46,23 @@ NAME_TO_CODE = {v: k for k, v in CODE_TO_NAME.items()}
 # To generate per-sample explanations via OpenAI vision API, run:
 #   python scripts/generate_explanations.py
 # Then pass --annotations data/sage_eval/annotations_with_explanations.json
+# Keep in sync with sage_infer.py SYSTEM_TEMPLATE (single source of truth).
 LABEL_EXPLANATION = {
     "normal":   "The student sits upright with gaze on study materials.",
     "away":     "The student is not in seat; nobody is in frame or not at desk.",
-    "blocked":  "The frame is occluded beyond 50 percent.",
-    "toy":      "The student is holding non-study items and playing.",
-    "phone":    "The student is holding a phone or tablet with gaze on the screen.",
-    "snack":    "The student is holding food near the mouth.",
+    "blocked":  "The body is occluded beyond 50 percent or the face is occluded such that behavior cannot be determined.",
+    "toy":      "The student is playing with non-study toys, excluding study-dependent items.",
+    "phone":    "The student is holding an electronic device with face clearly facing the screen.",
+    "snack":    "The student is holding food, handling snack packaging, or eating.",
     "sleepy":   "The student's eyes are closed.",
-    "prone":    "The upper body leans forward over 45 degrees, head near the desk.",
-    "bowed":    "The head is down, nose below the shoulder line.",
-    "chinrest": "Both hands support the chin or cheek.",
+    "prone":    "The upper body is slumped onto the desk, head resting on the desk or arms.",
+    "bowed":    "The head is clearly lowered or face down, not touching the desk.",
+    "chinrest": "Both hands with elbows on the desk support the chin or cheek; a single hand does not count.",
     "tilt":     "The head leans noticeably left or right.",
-    "turn":     "The head is turned to the side.",
+    "turn":     "The head is noticeably turned to one side.",
     "slope":    "The shoulders are noticeably not level.",
     "recline":  "The body leans back against the chair.",
-    "lookup":   "The head tilts noticeably back.",
+    "lookup":   "The face is clearly upward, chin raised.",
 }
 
 THINK_BLOCK = "\x3cthink\x3e\n\n\x3c/think\x3e\n\n"

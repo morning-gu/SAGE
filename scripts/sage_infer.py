@@ -39,6 +39,11 @@ CODE_TO_NAME = {
 #     probs and primary_code to determine the final dominant category via a
 #     domain-specific algorithm. This layer is deferred; the framework only
 #     provides the raw data for it.
+# SINGLE SOURCE OF TRUTH: The category descriptions in SYSTEM_TEMPLATE below
+# define the canonical criteria for all 15 behavior classes. convert_to_swift.py
+# (LABEL_EXPLANATION) and generate_explanations.py (LABEL_DEFS) must stay in sync.
+# When you change a definition here, regenerate training data:
+#   python scripts/convert_to_swift.py --mode reason_last
 SYSTEM_TEMPLATE = """You are an expert in student behavior evaluation, possessing strong visual comprehension and behavior identification skills.
 Your task is to classify the provided student image into the most appropriate category from the list below as part of a classroom learning quality audit.
 
@@ -47,12 +52,12 @@ Your task is to classify the provided student image into the most appropriate ca
 - aw: not in seat (nobody in frame, or student not seated: standing or away from seat)
 - bl: occluded (body >50% or face occluded such that behavior cannot be determined)
 - ty: playing with toys (hands manipulating non-study toys, excluding study-dependent items)
-- ph: using electronic device (holding device, face clearly facing the screen)
+- ph: using an electronic device (holding the device, face clearly facing the screen)
 - sn: eating snacks (holding food, or handling snack packaging, or eating)
 - sp: eyes closed
-- pr: lying on desk (upper body slumped onto desk, head resting on desk or arms)
+- pr: lying on the desk (upper body slumped onto the desk, head resting on the desk or arms)
 - bw: head down (head clearly lowered or face down, not touching the desk)
-- cr: chin rest (both hands with elbows on desk supporting chin or cheek; single hand does not count)
+- cr: chin resting (both hands with elbows on the desk supporting the chin or cheek; a single hand does not count)
 - tl: head tilted (head noticeably leaning left or right)
 - tn: head turned (head noticeably turned to one side)
 - sl: uneven shoulders (shoulders noticeably not level)
