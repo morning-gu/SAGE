@@ -20,7 +20,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "test"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0003",
@@ -43,7 +43,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_0004",
@@ -66,7 +66,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0006",
@@ -89,7 +89,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0009",
@@ -135,7 +135,7 @@
       "blocked": 0
     },
     "primary_label": "recline",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0012",
@@ -227,7 +227,7 @@
       "blocked": 0
     },
     "primary_label": "recline",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_0021",
@@ -250,7 +250,7 @@
       "blocked": 0
     },
     "primary_label": "tilt",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0022",
@@ -273,7 +273,7 @@
       "blocked": 0
     },
     "primary_label": "tilt",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_0023",
@@ -296,7 +296,7 @@
       "blocked": 0
     },
     "primary_label": "tilt",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0025",
@@ -319,7 +319,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0026",
@@ -503,7 +503,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0050",
@@ -664,7 +664,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0065",
@@ -733,7 +733,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0071",
@@ -779,7 +779,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_0082",
@@ -802,7 +802,7 @@
       "blocked": 0
     },
     "primary_label": "recline",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0083",
@@ -825,7 +825,7 @@
       "blocked": 0
     },
     "primary_label": "recline",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0084",
@@ -894,7 +894,7 @@
       "blocked": 0
     },
     "primary_label": "chinrest",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0093",
@@ -1078,7 +1078,7 @@
       "blocked": 1
     },
     "primary_label": "blocked",
-    "split": "test"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0122",
@@ -1124,7 +1124,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0155",
@@ -1147,7 +1147,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0156",
@@ -1193,7 +1193,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_0159",
@@ -1285,7 +1285,7 @@
       "blocked": 0
     },
     "primary_label": "phone",
-    "split": "test"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0187",
@@ -1331,7 +1331,7 @@
       "blocked": 0
     },
     "primary_label": "toy",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0196",
@@ -1377,7 +1377,7 @@
       "blocked": 0
     },
     "primary_label": "away",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0204",
@@ -1423,7 +1423,7 @@
       "blocked": 0
     },
     "primary_label": "toy",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0259",
@@ -1561,7 +1561,7 @@
       "blocked": 1
     },
     "primary_label": "blocked",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0322",
@@ -1745,7 +1745,7 @@
       "blocked": 0
     },
     "primary_label": "snack",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_0529",
@@ -1791,7 +1791,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0572",
@@ -1906,7 +1906,7 @@
       "blocked": 1
     },
     "primary_label": "blocked",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_0578",
@@ -1952,7 +1952,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0582",
@@ -2021,7 +2021,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0590",
@@ -2044,7 +2044,7 @@
       "blocked": 0
     },
     "primary_label": "recline",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0591",
@@ -2113,7 +2113,7 @@
       "blocked": 0
     },
     "primary_label": "tilt",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0599",
@@ -2159,7 +2159,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0630",
@@ -2228,7 +2228,7 @@
       "blocked": 1
     },
     "primary_label": "blocked",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0663",
@@ -2297,7 +2297,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0740",
@@ -2412,7 +2412,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0768",
@@ -2458,7 +2458,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0790",
@@ -2550,7 +2550,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_0865",
@@ -2596,7 +2596,7 @@
       "blocked": 1
     },
     "primary_label": "blocked",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0876",
@@ -2665,7 +2665,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0880",
@@ -2734,7 +2734,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_0883",
@@ -2803,7 +2803,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_0890",
@@ -2849,7 +2849,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0897",
@@ -2872,7 +2872,7 @@
       "blocked": 0
     },
     "primary_label": "toy",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_0907",
@@ -2941,7 +2941,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_0914",
@@ -3056,7 +3056,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0920",
@@ -3217,7 +3217,7 @@
       "blocked": 0
     },
     "primary_label": "chinrest",
-    "split": "test"
+    "split": "val"
   },
   {
     "sample_id": "20260324_0946",
@@ -3286,7 +3286,7 @@
       "blocked": 0
     },
     "primary_label": "phone",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_0998",
@@ -3424,7 +3424,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_1192",
@@ -3447,7 +3447,7 @@
       "blocked": 0
     },
     "primary_label": "phone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_1223",
@@ -3516,7 +3516,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_1226",
@@ -3608,7 +3608,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_1259",
@@ -3723,7 +3723,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_1422",
@@ -3792,7 +3792,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_1447",
@@ -3907,7 +3907,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_1458",
@@ -3930,7 +3930,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_1487",
@@ -3976,7 +3976,7 @@
       "blocked": 0
     },
     "primary_label": "toy",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_1507",
@@ -4022,7 +4022,7 @@
       "blocked": 0
     },
     "primary_label": "toy",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_1511",
@@ -4137,7 +4137,7 @@
       "blocked": 1
     },
     "primary_label": "blocked",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_1552",
@@ -4160,7 +4160,7 @@
       "blocked": 0
     },
     "primary_label": "normal",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_1553",
@@ -4505,7 +4505,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_1649",
@@ -4574,7 +4574,7 @@
       "blocked": 0
     },
     "primary_label": "snack",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_1689",
@@ -4643,7 +4643,7 @@
       "blocked": 0
     },
     "primary_label": "away",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_1720",
@@ -4666,7 +4666,7 @@
       "blocked": 0
     },
     "primary_label": "away",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_1723",
@@ -4781,7 +4781,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_1769",
@@ -4873,7 +4873,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_1814",
@@ -4942,7 +4942,7 @@
       "blocked": 0
     },
     "primary_label": "snack",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_1829",
@@ -5172,7 +5172,7 @@
       "blocked": 1
     },
     "primary_label": "phone",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_1971",
@@ -5241,7 +5241,7 @@
       "blocked": 1
     },
     "primary_label": "phone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_1992",
@@ -5264,7 +5264,7 @@
       "blocked": 1
     },
     "primary_label": "phone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_1997",
@@ -5632,7 +5632,7 @@
       "blocked": 0
     },
     "primary_label": "away",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_2220",
@@ -5655,7 +5655,7 @@
       "blocked": 0
     },
     "primary_label": "away",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_2247",
@@ -5678,7 +5678,7 @@
       "blocked": 0
     },
     "primary_label": "away",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_2280",
@@ -5724,7 +5724,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_2300",
@@ -5747,7 +5747,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_2302",
@@ -5816,7 +5816,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_2309",
@@ -5862,7 +5862,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_2340",
@@ -6115,7 +6115,7 @@
       "blocked": 0
     },
     "primary_label": "eyesclosed",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_2427",
@@ -6138,7 +6138,7 @@
       "blocked": 0
     },
     "primary_label": "toy",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_2444",
@@ -6230,7 +6230,7 @@
       "blocked": 0
     },
     "primary_label": "away",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_2505",
@@ -6299,7 +6299,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_2542",
@@ -6368,7 +6368,7 @@
       "blocked": 0
     },
     "primary_label": "recline",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260324_2548",
@@ -6391,7 +6391,7 @@
       "blocked": 0
     },
     "primary_label": "recline",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_2549",
@@ -6529,7 +6529,7 @@
       "blocked": 0
     },
     "primary_label": "away",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_2595",
@@ -6575,7 +6575,7 @@
       "blocked": 0
     },
     "primary_label": "toy",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_2622",
@@ -6621,7 +6621,7 @@
       "blocked": 0
     },
     "primary_label": "away",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_2640",
@@ -6736,7 +6736,7 @@
       "blocked": 0
     },
     "primary_label": "snack",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_2651",
@@ -6759,7 +6759,7 @@
       "blocked": 0
     },
     "primary_label": "snack",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_2653",
@@ -6828,7 +6828,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_2688",
@@ -6966,7 +6966,7 @@
       "blocked": 0
     },
     "primary_label": "snack",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_2731",
@@ -7173,7 +7173,7 @@
       "blocked": 0
     },
     "primary_label": "snack",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_2807",
@@ -7196,7 +7196,7 @@
       "blocked": 0
     },
     "primary_label": "snack",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_2810",
@@ -7403,7 +7403,7 @@
       "blocked": 1
     },
     "primary_label": "blocked",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_2859",
@@ -7426,7 +7426,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_2882",
@@ -7449,7 +7449,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_2888",
@@ -7472,7 +7472,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260324_2901",
@@ -7495,7 +7495,7 @@
       "blocked": 0
     },
     "primary_label": "recline",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_2909",
@@ -8001,7 +8001,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_3095",
@@ -8070,7 +8070,7 @@
       "blocked": 1
     },
     "primary_label": "blocked",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_3110",
@@ -8323,7 +8323,7 @@
       "blocked": 0
     },
     "primary_label": "away",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260324_3241",
@@ -8392,7 +8392,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0022",
@@ -8415,7 +8415,7 @@
       "blocked": 0
     },
     "primary_label": "chinrest",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0026",
@@ -8484,7 +8484,7 @@
       "blocked": 0
     },
     "primary_label": "chinrest",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0075",
@@ -8530,7 +8530,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260508_0081",
@@ -8576,7 +8576,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0087",
@@ -8645,7 +8645,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0100",
@@ -8691,7 +8691,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0110",
@@ -8714,7 +8714,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0111",
@@ -8921,7 +8921,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0124",
@@ -8967,7 +8967,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0128",
@@ -9013,7 +9013,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0130",
@@ -9036,7 +9036,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0132",
@@ -9427,7 +9427,7 @@
       "blocked": 0
     },
     "primary_label": "tilt",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0217",
@@ -9565,7 +9565,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0369",
@@ -9588,7 +9588,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0382",
@@ -9634,7 +9634,7 @@
       "blocked": 0
     },
     "primary_label": "chinrest",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0386",
@@ -9749,7 +9749,7 @@
       "blocked": 0
     },
     "primary_label": "chinrest",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0417",
@@ -9772,7 +9772,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0421",
@@ -9818,7 +9818,7 @@
       "blocked": 0
     },
     "primary_label": "slope",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260508_0425",
@@ -10071,7 +10071,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0451",
@@ -10278,7 +10278,7 @@
       "blocked": 0
     },
     "primary_label": "chinrest",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0518",
@@ -10347,7 +10347,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0523",
@@ -10370,7 +10370,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0525",
@@ -10393,7 +10393,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0528",
@@ -10485,7 +10485,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0547",
@@ -10715,7 +10715,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0569",
@@ -11198,7 +11198,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0629",
@@ -11313,7 +11313,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0639",
@@ -11497,7 +11497,7 @@
       "blocked": 0
     },
     "primary_label": "tilt",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0710",
@@ -11566,7 +11566,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0722",
@@ -11612,7 +11612,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0725",
@@ -11796,7 +11796,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0770",
@@ -12095,7 +12095,7 @@
       "blocked": 0
     },
     "primary_label": "tilt",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0861",
@@ -12233,7 +12233,7 @@
       "blocked": 0
     },
     "primary_label": "bowed",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_0929",
@@ -12256,7 +12256,7 @@
       "blocked": 0
     },
     "primary_label": "chinrest",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_0959",
@@ -12417,7 +12417,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_1012",
@@ -12463,7 +12463,7 @@
       "blocked": 0
     },
     "primary_label": "tilt",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_1033",
@@ -12509,7 +12509,7 @@
       "blocked": 0
     },
     "primary_label": "eyesclosed",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_1045",
@@ -12624,7 +12624,7 @@
       "blocked": 0
     },
     "primary_label": "tilt",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_1081",
@@ -12854,7 +12854,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_1193",
@@ -12900,7 +12900,7 @@
       "blocked": 0
     },
     "primary_label": "recline",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_1203",
@@ -12946,7 +12946,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_1209",
@@ -12969,7 +12969,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_1212",
@@ -13061,7 +13061,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_1233",
@@ -13107,7 +13107,7 @@
       "blocked": 0
     },
     "primary_label": "chinrest",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_1236",
@@ -13291,7 +13291,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_1265",
@@ -13314,7 +13314,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_1268",
@@ -13475,7 +13475,7 @@
       "blocked": 0
     },
     "primary_label": "chinrest",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_1292",
@@ -13751,7 +13751,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_1328",
@@ -13912,7 +13912,7 @@
       "blocked": 0
     },
     "primary_label": "recline",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_1335",
@@ -14119,7 +14119,7 @@
       "blocked": 0
     },
     "primary_label": "recline",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_1368",
@@ -14211,7 +14211,7 @@
       "blocked": 0
     },
     "primary_label": "phone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_1399",
@@ -14349,7 +14349,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_1442",
@@ -14487,7 +14487,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_1506",
@@ -14510,7 +14510,7 @@
       "blocked": 0
     },
     "primary_label": "slope",
-    "split": "test"
+    "split": "train"
   },
   {
     "sample_id": "20260508_1508",
@@ -14579,7 +14579,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_1513",
@@ -14924,7 +14924,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_1661",
@@ -14947,7 +14947,7 @@
       "blocked": 0
     },
     "primary_label": "phone",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_1662",
@@ -15016,7 +15016,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_1691",
@@ -15154,7 +15154,7 @@
       "blocked": 0
     },
     "primary_label": "eyesclosed",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260508_1699",
@@ -15246,7 +15246,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_1712",
@@ -15315,7 +15315,7 @@
       "blocked": 0
     },
     "primary_label": "slope",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260508_1717",
@@ -15430,7 +15430,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260518_0010",
@@ -15476,7 +15476,7 @@
       "blocked": 0
     },
     "primary_label": "lookup",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260518_0024",
@@ -15683,7 +15683,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260518_0072",
@@ -15936,7 +15936,7 @@
       "blocked": 0
     },
     "primary_label": "phone",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260518_0114",
@@ -16028,7 +16028,7 @@
       "blocked": 0
     },
     "primary_label": "slope",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260518_0128",
@@ -16097,7 +16097,7 @@
       "blocked": 0
     },
     "primary_label": "slope",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260518_0176",
@@ -16166,7 +16166,7 @@
       "blocked": 0
     },
     "primary_label": "slope",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260518_0182",
@@ -16465,7 +16465,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260518_0217",
@@ -16511,7 +16511,7 @@
       "blocked": 0
     },
     "primary_label": "prone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260518_0219",
@@ -16626,7 +16626,7 @@
       "blocked": 0
     },
     "primary_label": "snack",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260518_0235",
@@ -16902,7 +16902,7 @@
       "blocked": 0
     },
     "primary_label": "recline",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260519_0018",
@@ -16971,7 +16971,7 @@
       "blocked": 0
     },
     "primary_label": "recline",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260519_0021",
@@ -17155,7 +17155,7 @@
       "blocked": 0
     },
     "primary_label": "recline",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260520_0398",
@@ -17270,7 +17270,7 @@
       "blocked": 0
     },
     "primary_label": "slope",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260520_0636",
@@ -17638,7 +17638,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260520_2146",
@@ -17753,7 +17753,7 @@
       "blocked": 0
     },
     "primary_label": "turn",
-    "split": "train"
+    "split": "val"
   },
   {
     "sample_id": "20260520_3254",
@@ -17845,7 +17845,7 @@
       "blocked": 0
     },
     "primary_label": "phone",
-    "split": "train"
+    "split": "test"
   },
   {
     "sample_id": "20260522_0007",
