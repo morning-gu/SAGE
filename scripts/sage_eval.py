@@ -303,6 +303,11 @@ def compute_metrics(
     primary_acc = float(np.mean(primary_hit))
     primary_acc_exact = float(np.mean(pred_primary == gt_primary))
     cm = confusion_matrix(gt_primary, pred_primary, NUM_CLASSES)
+    # Hit-aware CM: effective true = predicted label when it hit any valid
+    # ground-truth label (diagonal), else gt_primary (off-diagonal miss).
+    # Diagonal sum / N == primary_accuracy; strict cm diagonal / N == exact.
+    effective_true = np.where(primary_hit, pred_primary, gt_primary)
+    cm_hit = confusion_matrix(effective_true, pred_primary, NUM_CLASSES)
 
     return {
         "num_samples": len(gt),
@@ -321,6 +326,7 @@ def compute_metrics(
         "per_class": per_class,
         "latency": latency_stats(latencies),
         "confusion_matrix": cm.tolist(),
+        "confusion_matrix_hit": cm_hit.tolist(),
         "confusion_labels": BEHAVIOR_NAMES,
     }
 
@@ -363,6 +369,8 @@ def save_report(report: dict, output_dir: Path) -> None:
     print(f"[eval] report saved -> {path}")
     np.save(output_dir / "confusion_matrix.npy",
             np.array(report["confusion_matrix"], dtype=np.int32))
+    np.save(output_dir / "confusion_matrix_hit.npy",
+            np.array(report["confusion_matrix_hit"], dtype=np.int32))
 
 
 # -- Main ---------------------------------------------------------------------
