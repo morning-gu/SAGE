@@ -1,0 +1,18 @@
+# VLM experiment (type: vlm) — see _defaults.yaml for merged defaults.
+exp_id: d1_bce_nomp_s43
+type: vlm
+seed: 43
+est_hours: 11.0         # T4 fp16 estimate (A10 measured 5h47m x ~1.9)
+notes: "MP ablation direction: CE+BCE without multi-positive correction (mp_weight=0, hard CE at label position), seed 43"
+
+train:
+  output_dir: checkpoints/experiments/d1_bce_nomp_s43
+  args:
+    bce_weight: 1.0
+    mp_weight: 0.0
+    seed: 43
+
+eval:
+  args:
+    gt: data/sage_eval/annotations.json
+    split: test

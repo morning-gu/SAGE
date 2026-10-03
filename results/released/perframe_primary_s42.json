@@ -1,0 +1,2883 @@
+{
+ "seed": 42,
+ "tau": 0.95,
+ "raw_floors": {
+  "slope": -4.0,
+  "tilt": -45.0
+ },
+ "n_frames": 287,
+ "vlm_primary_acc": 0.8606271777003485,
+ "veto_primary_acc": 0.8641114982578397,
+ "frames": [
+  {
+   "sample_id": "0005",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0008",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0021",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0040",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0070",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "turn",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0079",
+   "vlm_primary": "phone",
+   "veto_primary": "phone",
+   "gt_primary": "phone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0089",
+   "vlm_primary": "phone",
+   "veto_primary": "phone",
+   "gt_primary": "phone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0101",
+   "vlm_primary": "toy",
+   "veto_primary": "toy",
+   "gt_primary": "toy",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0105",
+   "vlm_primary": "toy",
+   "veto_primary": "toy",
+   "gt_primary": "toy",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0119",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0122",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0127",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0129",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0151",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0156",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0171",
+   "vlm_primary": "snack",
+   "veto_primary": "snack",
+   "gt_primary": "snack",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0180",
+   "vlm_primary": "turn",
+   "veto_primary": "turn",
+   "gt_primary": "turn",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0185",
+   "vlm_primary": "snack",
+   "veto_primary": "snack",
+   "gt_primary": "snack",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0216",
+   "vlm_primary": "bowed",
+   "veto_primary": "bowed",
+   "gt_primary": "bowed",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0223",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0244",
+   "vlm_primary": "toy",
+   "veto_primary": "toy",
+   "gt_primary": "toy",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0256",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0261",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0266",
+   "vlm_primary": "turn",
+   "veto_primary": "turn",
+   "gt_primary": "turn",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0272",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0282",
+   "vlm_primary": "away",
+   "veto_primary": "away",
+   "gt_primary": "away",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0284",
+   "vlm_primary": "away",
+   "veto_primary": "away",
+   "gt_primary": "away",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0290",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "bowed",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0296",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0297",
+   "vlm_primary": "phone",
+   "veto_primary": "phone",
+   "gt_primary": "normal",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0321",
+   "vlm_primary": "toy",
+   "veto_primary": "toy",
+   "gt_primary": "toy",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0322",
+   "vlm_primary": "toy",
+   "veto_primary": "toy",
+   "gt_primary": "toy",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0327",
+   "vlm_primary": "blocked",
+   "veto_primary": "blocked",
+   "gt_primary": "blocked",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0335",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0346",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0347",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0351",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0354",
+   "vlm_primary": "bowed",
+   "veto_primary": "bowed",
+   "gt_primary": "bowed",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0356",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "tilt",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0358",
+   "vlm_primary": "blocked",
+   "veto_primary": "blocked",
+   "gt_primary": "blocked",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0367",
+   "vlm_primary": "tilt",
+   "veto_primary": "tilt",
+   "gt_primary": "tilt",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0368",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0369",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0373",
+   "vlm_primary": "bowed",
+   "veto_primary": "bowed",
+   "gt_primary": "bowed",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0389",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "toy",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0392",
+   "vlm_primary": "snack",
+   "veto_primary": "snack",
+   "gt_primary": "toy",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0393",
+   "vlm_primary": "toy",
+   "veto_primary": "toy",
+   "gt_primary": "toy",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0401",
+   "vlm_primary": "bowed",
+   "veto_primary": "bowed",
+   "gt_primary": "bowed",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0408",
+   "vlm_primary": "turn",
+   "veto_primary": "turn",
+   "gt_primary": "turn",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0412",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0413",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "bowed",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0438",
+   "vlm_primary": "away",
+   "veto_primary": "away",
+   "gt_primary": "away",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0440",
+   "vlm_primary": "snack",
+   "veto_primary": "snack",
+   "gt_primary": "normal",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0443",
+   "vlm_primary": "phone",
+   "veto_primary": "phone",
+   "gt_primary": "phone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0449",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "toy",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0468",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0474",
+   "vlm_primary": "toy",
+   "veto_primary": "toy",
+   "gt_primary": "toy",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0478",
+   "vlm_primary": "away",
+   "veto_primary": "away",
+   "gt_primary": "away",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0489",
+   "vlm_primary": "toy",
+   "veto_primary": "toy",
+   "gt_primary": "toy",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0500",
+   "vlm_primary": "toy",
+   "veto_primary": "toy",
+   "gt_primary": "snack",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0503",
+   "vlm_primary": "turn",
+   "veto_primary": "turn",
+   "gt_primary": "normal",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0514",
+   "vlm_primary": "blocked",
+   "veto_primary": "blocked",
+   "gt_primary": "blocked",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0519",
+   "vlm_primary": "snack",
+   "veto_primary": "snack",
+   "gt_primary": "snack",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0539",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0544",
+   "vlm_primary": "away",
+   "veto_primary": "away",
+   "gt_primary": "away",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0548",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0550",
+   "vlm_primary": "toy",
+   "veto_primary": "toy",
+   "gt_primary": "toy",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0557",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0558",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0575",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0609",
+   "vlm_primary": "snack",
+   "veto_primary": "snack",
+   "gt_primary": "snack",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0616",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "snack",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0618",
+   "vlm_primary": "snack",
+   "veto_primary": "snack",
+   "gt_primary": "snack",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0636",
+   "vlm_primary": "away",
+   "veto_primary": "away",
+   "gt_primary": "away",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0659",
+   "vlm_primary": "turn",
+   "veto_primary": "turn",
+   "gt_primary": "turn",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0677",
+   "vlm_primary": "away",
+   "veto_primary": "away",
+   "gt_primary": "away",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0701",
+   "vlm_primary": "phone",
+   "veto_primary": "phone",
+   "gt_primary": "phone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0706",
+   "vlm_primary": "blocked",
+   "veto_primary": "blocked",
+   "gt_primary": "blocked",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0713",
+   "vlm_primary": "phone",
+   "veto_primary": "phone",
+   "gt_primary": "phone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0721",
+   "vlm_primary": "snack",
+   "veto_primary": "snack",
+   "gt_primary": "snack",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0736",
+   "vlm_primary": "snack",
+   "veto_primary": "snack",
+   "gt_primary": "snack",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0746",
+   "vlm_primary": "away",
+   "veto_primary": "away",
+   "gt_primary": "away",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0759",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0767",
+   "vlm_primary": "toy",
+   "veto_primary": "toy",
+   "gt_primary": "toy",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0775",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0807",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0812",
+   "vlm_primary": "tilt",
+   "veto_primary": "slope",
+   "gt_primary": "normal",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": true,
+   "demotion_outcome": "neutral"
+  },
+  {
+   "sample_id": "0817",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0821",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0829",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "recline",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0839",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0844",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0845",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0848",
+   "vlm_primary": "away",
+   "veto_primary": "away",
+   "gt_primary": "away",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0853",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0859",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0860",
+   "vlm_primary": "away",
+   "veto_primary": "away",
+   "gt_primary": "away",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0862",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0873",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0876",
+   "vlm_primary": "turn",
+   "veto_primary": "turn",
+   "gt_primary": "turn",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0878",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0901",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0904",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0909",
+   "vlm_primary": "toy",
+   "veto_primary": "toy",
+   "gt_primary": "phone",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0931",
+   "vlm_primary": "toy",
+   "veto_primary": "toy",
+   "gt_primary": "away",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0938",
+   "vlm_primary": "away",
+   "veto_primary": "away",
+   "gt_primary": "away",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "0985",
+   "vlm_primary": "blocked",
+   "veto_primary": "blocked",
+   "gt_primary": "blocked",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1005",
+   "vlm_primary": "blocked",
+   "veto_primary": "blocked",
+   "gt_primary": "blocked",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1013",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1016",
+   "vlm_primary": "away",
+   "veto_primary": "away",
+   "gt_primary": "away",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1022",
+   "vlm_primary": "away",
+   "veto_primary": "away",
+   "gt_primary": "away",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1023",
+   "vlm_primary": "away",
+   "veto_primary": "away",
+   "gt_primary": "away",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1039",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1049",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1051",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1057",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1061",
+   "vlm_primary": "tilt",
+   "veto_primary": "tilt",
+   "gt_primary": "tilt",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1066",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1082",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1094",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1096",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1146",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1164",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1168",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1193",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1194",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1204",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1216",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1220",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1224",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1236",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1240",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1243",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1246",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1252",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1260",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1269",
+   "vlm_primary": "tilt",
+   "veto_primary": "tilt",
+   "gt_primary": "tilt",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1288",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1297",
+   "vlm_primary": "bowed",
+   "veto_primary": "bowed",
+   "gt_primary": "bowed",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1312",
+   "vlm_primary": "eyesclosed",
+   "veto_primary": "eyesclosed",
+   "gt_primary": "tilt",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1313",
+   "vlm_primary": "tilt",
+   "veto_primary": "tilt",
+   "gt_primary": "tilt",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1320",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1321",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1323",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1329",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1345",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1347",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1354",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1358",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1360",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1396",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1406",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1412",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "eyesclosed",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1421",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1428",
+   "vlm_primary": "bowed",
+   "veto_primary": "bowed",
+   "gt_primary": "bowed",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1431",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1432",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1437",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1441",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1444",
+   "vlm_primary": "tilt",
+   "veto_primary": "tilt",
+   "gt_primary": "tilt",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1449",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1462",
+   "vlm_primary": "bowed",
+   "veto_primary": "bowed",
+   "gt_primary": "bowed",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1484",
+   "vlm_primary": "bowed",
+   "veto_primary": "bowed",
+   "gt_primary": "bowed",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1499",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "bowed",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1507",
+   "vlm_primary": "eyesclosed",
+   "veto_primary": "eyesclosed",
+   "gt_primary": "prone",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1515",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1522",
+   "vlm_primary": "tilt",
+   "veto_primary": "tilt",
+   "gt_primary": "tilt",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1535",
+   "vlm_primary": "bowed",
+   "veto_primary": "bowed",
+   "gt_primary": "bowed",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1548",
+   "vlm_primary": "bowed",
+   "veto_primary": "bowed",
+   "gt_primary": "bowed",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1551",
+   "vlm_primary": "tilt",
+   "veto_primary": "tilt",
+   "gt_primary": "tilt",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1581",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1584",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1586",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1591",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1606",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1626",
+   "vlm_primary": "tilt",
+   "veto_primary": "tilt",
+   "gt_primary": "prone",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1627",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1629",
+   "vlm_primary": "tilt",
+   "veto_primary": "tilt",
+   "gt_primary": "tilt",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1641",
+   "vlm_primary": "tilt",
+   "veto_primary": "tilt",
+   "gt_primary": "tilt",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1643",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1662",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "eyesclosed",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1668",
+   "vlm_primary": "bowed",
+   "veto_primary": "bowed",
+   "gt_primary": "bowed",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1686",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1700",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1729",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1741",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1746",
+   "vlm_primary": "tilt",
+   "veto_primary": "tilt",
+   "gt_primary": "tilt",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1763",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1771",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1801",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1802",
+   "vlm_primary": "recline",
+   "veto_primary": "recline",
+   "gt_primary": "recline",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1806",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1811",
+   "vlm_primary": "recline",
+   "veto_primary": "recline",
+   "gt_primary": "lookup",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1813",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "recline",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1828",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1850",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "slope",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1856",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1857",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1868",
+   "vlm_primary": "recline",
+   "veto_primary": "recline",
+   "gt_primary": "recline",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1885",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1888",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1917",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1920",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1926",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1945",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1947",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1958",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1959",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1970",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "1974",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2001",
+   "vlm_primary": "turn",
+   "veto_primary": "turn",
+   "gt_primary": "turn",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2007",
+   "vlm_primary": "turn",
+   "veto_primary": "turn",
+   "gt_primary": "turn",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2040",
+   "vlm_primary": "turn",
+   "veto_primary": "turn",
+   "gt_primary": "turn",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2047",
+   "vlm_primary": "tilt",
+   "veto_primary": "slope",
+   "gt_primary": "slope",
+   "vlm_correct": false,
+   "veto_correct": true,
+   "primary_demoted": true,
+   "demotion_outcome": "improved"
+  },
+  {
+   "sample_id": "2057",
+   "vlm_primary": "phone",
+   "veto_primary": "phone",
+   "gt_primary": "phone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2069",
+   "vlm_primary": "tilt",
+   "veto_primary": "tilt",
+   "gt_primary": "slope",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2086",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "eyesclosed",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2091",
+   "vlm_primary": "eyesclosed",
+   "veto_primary": "eyesclosed",
+   "gt_primary": "eyesclosed",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2136",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2158",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2166",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "eyesclosed",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2182",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2189",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "turn",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2191",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "turn",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2229",
+   "vlm_primary": "phone",
+   "veto_primary": "phone",
+   "gt_primary": "phone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2233",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "turn",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2235",
+   "vlm_primary": "turn",
+   "veto_primary": "turn",
+   "gt_primary": "turn",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2238",
+   "vlm_primary": "recline",
+   "veto_primary": "recline",
+   "gt_primary": "recline",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2240",
+   "vlm_primary": "recline",
+   "veto_primary": "recline",
+   "gt_primary": "recline",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2242",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2245",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2248",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2249",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "slope",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2252",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2262",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2269",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2276",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2281",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2287",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2296",
+   "vlm_primary": "slope",
+   "veto_primary": "slope",
+   "gt_primary": "slope",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2301",
+   "vlm_primary": "turn",
+   "veto_primary": "turn",
+   "gt_primary": "turn",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2328",
+   "vlm_primary": "slope",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": false,
+   "veto_correct": true,
+   "primary_demoted": true,
+   "demotion_outcome": "improved"
+  },
+  {
+   "sample_id": "2336",
+   "vlm_primary": "prone",
+   "veto_primary": "prone",
+   "gt_primary": "prone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2337",
+   "vlm_primary": "eyesclosed",
+   "veto_primary": "eyesclosed",
+   "gt_primary": "eyesclosed",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2346",
+   "vlm_primary": "snack",
+   "veto_primary": "snack",
+   "gt_primary": "snack",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2348",
+   "vlm_primary": "snack",
+   "veto_primary": "snack",
+   "gt_primary": "snack",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2350",
+   "vlm_primary": "snack",
+   "veto_primary": "snack",
+   "gt_primary": "snack",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2351",
+   "vlm_primary": "snack",
+   "veto_primary": "snack",
+   "gt_primary": "snack",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2355",
+   "vlm_primary": "phone",
+   "veto_primary": "phone",
+   "gt_primary": "phone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2361",
+   "vlm_primary": "phone",
+   "veto_primary": "phone",
+   "gt_primary": "phone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2363",
+   "vlm_primary": "recline",
+   "veto_primary": "recline",
+   "gt_primary": "recline",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2364",
+   "vlm_primary": "blocked",
+   "veto_primary": "blocked",
+   "gt_primary": "recline",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2366",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2367",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2390",
+   "vlm_primary": "recline",
+   "veto_primary": "recline",
+   "gt_primary": "recline",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2398",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2400",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2414",
+   "vlm_primary": "slope",
+   "veto_primary": "slope",
+   "gt_primary": "slope",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2440",
+   "vlm_primary": "slope",
+   "veto_primary": "slope",
+   "gt_primary": "slope",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2442",
+   "vlm_primary": "slope",
+   "veto_primary": "slope",
+   "gt_primary": "slope",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2447",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2465",
+   "vlm_primary": "slope",
+   "veto_primary": "slope",
+   "gt_primary": "slope",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2466",
+   "vlm_primary": "slope",
+   "veto_primary": "slope",
+   "gt_primary": "slope",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2468",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "slope",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2469",
+   "vlm_primary": "slope",
+   "veto_primary": "normal",
+   "gt_primary": "slope",
+   "vlm_correct": true,
+   "veto_correct": false,
+   "primary_demoted": true,
+   "demotion_outcome": "degraded"
+  },
+  {
+   "sample_id": "2472",
+   "vlm_primary": "tilt",
+   "veto_primary": "tilt",
+   "gt_primary": "tilt",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2487",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "chinrest",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2493",
+   "vlm_primary": "chinrest",
+   "veto_primary": "chinrest",
+   "gt_primary": "slope",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2496",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2497",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2502",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2516",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "slope",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2519",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2521",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2535",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "slope",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2544",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2561",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2564",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "slope",
+   "vlm_correct": false,
+   "veto_correct": false,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2570",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2571",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2582",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2583",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2595",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2598",
+   "vlm_primary": "normal",
+   "veto_primary": "normal",
+   "gt_primary": "normal",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2606",
+   "vlm_primary": "lookup",
+   "veto_primary": "lookup",
+   "gt_primary": "lookup",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2607",
+   "vlm_primary": "turn",
+   "veto_primary": "turn",
+   "gt_primary": "turn",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  },
+  {
+   "sample_id": "2613",
+   "vlm_primary": "phone",
+   "veto_primary": "phone",
+   "gt_primary": "phone",
+   "vlm_correct": true,
+   "veto_correct": true,
+   "primary_demoted": false,
+   "demotion_outcome": null
+  }
+ ]
+}

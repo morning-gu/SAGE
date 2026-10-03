@@ -1,0 +1,12 @@
+# D0 zero-shot baseline (type: eval_only): base model, greedy decoding, no
+# LoRA — single seed is sufficient (no training randomness involved).
+exp_id: d0_zeroshot_s42
+type: eval_only
+seed: 42
+est_hours: 0.4
+notes: "D0 zero-shot baseline, greedy decode, base model without LoRA"
+
+eval:
+  args:
+    gt: data/sage_eval/annotations.json
+    split: test

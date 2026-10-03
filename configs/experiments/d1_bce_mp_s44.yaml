@@ -1,0 +1,18 @@
+# VLM experiment (type: vlm) — see _defaults.yaml for merged defaults.
+exp_id: d1_bce_mp_s44
+type: vlm
+seed: 44
+est_hours: 11.0         # T4 fp16 estimate (A10 measured 5h47m x ~1.9)
+notes: "D1 primary: CE+BCE+MP hybrid loss (mp_weight=1.0, exact soft-set CE replacement), seed 44"
+
+train:
+  output_dir: checkpoints/experiments/d1_bce_mp_s44
+  args:
+    bce_weight: 1.0
+    mp_weight: 1.0
+    seed: 44
+
+eval:
+  args:
+    gt: data/sage_eval/annotations.json
+    split: test

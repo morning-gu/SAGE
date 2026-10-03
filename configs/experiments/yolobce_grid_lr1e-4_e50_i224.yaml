@@ -1,0 +1,18 @@
+# Grid experiment (type: yolo_bce) — see _defaults.yaml for merged defaults.
+exp_id: yolobce_grid_lr1e-4_e50_i224
+type: yolo_bce
+seed: 42
+notes: "YOLO-cls with BCE (multi-label) head grid: lr=1e-4, epochs=50, imgsz=224"
+
+train:
+  output_dir: checkpoints/experiments/yolobce_grid_lr1e-4_e50_i224/train
+  args:
+    epochs: 50
+    lr: 0.0001
+    imgsz: 224
+    seed: 42
+
+eval:
+  args:
+    threshold: 0.5
+    imgsz: 224   # must match the training grid imgsz

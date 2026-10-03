@@ -1,0 +1,105 @@
+# ============================================================================
+# Shared defaults for configs/experiments/*.yaml
+# ----------------------------------------------------------------------------
+# run_experiment.py deep-merges, in order (later wins):
+#     common           <- types[<exp type>]  <-  <experiment>.yaml
+# so each experiment yaml only carries what makes it distinct (exp_id, seed,
+# notes, output_dir, and the varying train args).
+#
+# Fields understood by scripts/run_experiment.py:
+#   exp_id     : train outputs under checkpoints/experiments/<exp_id>/train,
+#                eval report under results/experiments/<exp_id>/eval_report.json
+#   type       : vlm | yolo | cnn | yolo_bce | ext_head | eval_only
+#   seed       : written into train args and used for provenance
+#   est_hours  : wall-clock estimate used by --until budget truncation
+#   notes      : free-text purpose of the experiment
+#   train      : {script | steps[], output_dir, args{cli-flag: value}}
+#   eval       : {script, args{cli-flag: value}}
+#                (gt/split default via common.eval.args)
+#                (workers: 4 default only for the eval scripts that accept it)
+# ============================================================================
+common:
+  est_hours: 1.0
+  eval:
+    args:
+      gt: data/sage_eval/annotations.json
+      split: test
+
+types:
+  vlm:
+    est_hours: 11.0         # 5h47m measured on A10 24GB; T4 16GB fp16 ~1.9x
+    train:
+      script: scripts/train_sage_vlm.py
+      args:
+        model: Qwen/Qwen3.5-4B
+        dataset: data/no_reason/train.jsonl
+        val_dataset: data/no_reason/val.jsonl
+        num_train_epochs: 5
+        per_device_train_batch_size: 1
+        gradient_accumulation_steps: 16
+        learning_rate: 5.0e-5
+        warmup_ratio: 0.1
+        logging_steps: 10
+        save_strategy: epoch
+        save_total_limit: 2
+        gradient_checkpointing: 1
+        max_pixels: 200704     # T4 16GB protocol: 448*448 visual-token cap
+                               # (= sage_check.constants.MAX_PIXELS_T4); eval
+                               # servers must use the same cap
+                               # (SAGE_VLM_MAX_PIXELS, their default)
+    eval:
+      script: scripts/eval_vlm_check.py
+      args:
+        workers: 4
+
+  yolo:
+    est_hours: 0.8
+    train:
+      script: scripts/train_yolo_cls.py
+      args:
+        data: data/yolo_cls
+        model: yolov8s-cls.pt
+        batch: 16
+    eval:
+      script: scripts/eval_yolo_cls.py
+      args:
+        threshold: 0.5
+
+  cnn:
+    est_hours: 1.5
+    train:
+      script: scripts/train_cnn_mlb.py
+      args:
+        batch: 16
+        num_workers: 4
+    eval:
+      script: scripts/eval_cnn_mlb.py
+      args:
+        threshold: 0.5
+        batch_size: 1
+
+  yolo_bce:
+    est_hours: 0.8
+    train:
+      script: scripts/train_yolo_bce.py
+      args:
+        batch: 16
+    eval:
+      # state_dict checkpoints — eval_yolo_cls.py (ultralytics YOLO loader)
+      # cannot load them; eval_yolo_bce rebuilds the architecture instead.
+      script: scripts/eval_yolo_bce.py
+      args:
+        threshold: 0.5
+
+  eval_only:
+    est_hours: 0.4
+    eval:
+      script: scripts/eval_vlm_check.py
+      args:
+        workers: 4
+
+  veto_eval:
+    est_hours: 0.5          # collect needs the VLM + detection servers up
+    eval:
+      script: scripts/eval_veto.py
+      args: {}

@@ -1,0 +1,21 @@
+# E3 veto-quality protocol, stage 3 (type: veto_eval): single frozen-tau pass
+# on the held-out test split — VP / FVR / TPK / coverage, by-group decomposition,
+# and end-to-end primary accuracy. Preregistered headline table for C3.
+# v5: consumes thresholds.json (slope/tilt raw floors frozen by the freeze
+# stage on the val claim pool); strategies listed there gate on the frozen
+# floor instead of the quantile.
+exp_id: e3_eval_s42
+type: veto_eval
+seed: 42
+est_hours: 0.1
+notes: "E3: frozen-tau veto evaluation on test (VP/FVR/TPK/coverage + e2e)"
+
+eval:
+  args:
+    stage: eval
+    records: results/veto_eval/test.jsonl
+    ecdf: results/veto_eval/ecdf.json
+    tau_from: results/veto_eval/tau.json
+    thresholds: results/veto_eval/thresholds.json
+    out_dir: results/veto_eval
+    threshold: 0.5

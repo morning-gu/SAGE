@@ -1,0 +1,17 @@
+# Grid experiment (type: cnn) — see _defaults.yaml for merged defaults.
+exp_id: resnet_grid_lr1e-4_e50_i224
+type: cnn
+seed: 42
+notes: "ResNet50+BCE multi-label grid: lr=1e-4, epochs=50, imgsz=224"
+
+train:
+  output_dir: checkpoints/experiments/resnet_grid_lr1e-4_e50_i224/train
+  args:
+    lr: 0.0001
+    epochs: 50
+    imgsz: 224
+    seed: 42
+
+eval:
+  args:
+    threshold: 0.5

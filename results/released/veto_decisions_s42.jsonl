@@ -1,0 +1,9 @@
+{"sample_id": "0812", "class": "tilt", "verdict": "contradicted", "raw_evidence": -15.83456515210996, "tilde_e": 0.3137958126909168, "was_primary": true, "correct": true, "gate": "frozen_threshold"}
+{"sample_id": "1193", "class": "tilt", "verdict": "contradicted", "raw_evidence": -15.145356807612279, "tilde_e": 0.3277887781718196, "was_primary": false, "correct": true, "gate": "frozen_threshold"}
+{"sample_id": "1193", "class": "slope", "verdict": "contradicted", "raw_evidence": -1.7652218137908946, "tilde_e": 0.732171770216533, "was_primary": false, "correct": true, "gate": "frozen_threshold"}
+{"sample_id": "1313", "class": "slope", "verdict": "contradicted", "raw_evidence": -0.0, "tilde_e": 1.0, "was_primary": false, "correct": true, "gate": "frozen_threshold"}
+{"sample_id": "2047", "class": "tilt", "verdict": "contradicted", "raw_evidence": -21.058953279082544, "tilde_e": 0.21723046371961088, "was_primary": true, "correct": true, "gate": "frozen_threshold"}
+{"sample_id": "2328", "class": "tilt", "verdict": "contradicted", "raw_evidence": -9.93210966706444, "tilde_e": 0.4575933703937203, "was_primary": false, "correct": true, "gate": "frozen_threshold"}
+{"sample_id": "2328", "class": "slope", "verdict": "contradicted", "raw_evidence": -1.5607633377706773, "tilde_e": 0.7406926764978722, "was_primary": true, "correct": true, "gate": "frozen_threshold"}
+{"sample_id": "2465", "class": "tilt", "verdict": "contradicted", "raw_evidence": -10.706937443992992, "tilde_e": 0.4307615425814278, "was_primary": false, "correct": true, "gate": "frozen_threshold"}
+{"sample_id": "2469", "class": "slope", "verdict": "contradicted", "raw_evidence": -3.082053549941231, "tilde_e": 0.5933104396450105, "was_primary": true, "correct": false, "gate": "frozen_threshold"}

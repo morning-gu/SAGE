@@ -1,0 +1,89 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Type checkers
+.mypy_cache/
+.pyre/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Logs
+*.log
+logs/
+
+# LaTeX build intermediates
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.spl
+
+# Large image data (105MB, 779 files) — keep JSON annotations only
+data/
+models/*
+# results/ stays local except the frozen verification release (paper Data availability)
+results/*
+!results/released/
+
+# Local model / checkpoint artifacts
+checkpoints/
+*.ckpt
+*.pt
+*.bin
+/uv.lock
+
+# Test script output artifacts
+out.jpg
+out_standing.jpg
+out*.jpg
+/certs/
+
+# Playwright CLI artifacts
+.playwright-cli/
+
+# Local-only artifacts
+runs/
+.claude/
+.init.sh
+data.zip
+results.zip
+
+# Paper sources & documents — local-only, never commit/push (incl. review
+# artifacts, figure QA, planning archive under paper/docs/).
+paper/

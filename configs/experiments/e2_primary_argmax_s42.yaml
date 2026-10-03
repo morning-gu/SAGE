@@ -1,0 +1,16 @@
+# E2 decision-mode ablation (type: eval_only): primary taken as the argmax of
+# the auxiliary multi-label sigmoid probabilities, reusing the E1 primary
+# adapter (bce+mp). Client-side --primary-source override; no server change.
+exp_id: e2_primary_argmax_s42
+type: eval_only
+seed: 42
+est_hours: 0.4
+notes: "E2: argmax-of-sigmoid primary decision on the d1_bce_nomp_s42 adapter"
+
+eval:
+  lora_from_experiment: d1_bce_nomp_s42
+  args:
+    mode: no_reason
+    primary_source: argmax
+    gt: data/sage_eval/annotations.json
+    split: test

@@ -1,0 +1,22 @@
+# E3 veto-quality protocol, stage 1 (type: veto_eval): collect claim-conditioned
+# evidence records on the validation split (ECDF calibration + tau freezing).
+# Requires the VLM detection server (started with the d1_bce_nomp_s42 adapter,
+# SAGE_VLM_URL in env) AND the detection services up — see
+# docs/veto-algorithm.md §6 and scripts/eval_veto.py.
+exp_id: e3_collect_val_s42
+type: veto_eval
+seed: 42
+est_hours: 0.5
+notes: "E3: evidence collection, validation split (ECDF calibration pool)"
+
+eval:
+  # VLM server spawned by the runner from this adapter (same
+  # pixel-cap/adapter propagation as the d1/e2 evals — no manual server)
+  lora_from_experiment: d1_bce_nomp_s42
+  args:
+    stage: collect
+    split: val
+    mode: no_reason
+    threshold: 0.5
+    workers: 4
+    out: results/veto_eval/val.jsonl

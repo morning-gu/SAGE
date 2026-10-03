@@ -1,0 +1,17 @@
+# E2 decision-mode ablation (type: eval_only): primary taken from the
+# generated autoregressive token (the C2 dual-channel decision), reusing the
+# E1 primary adapter. This mirrors the d1 eval path (mainline adapter), kept as
+# its own registry entry so E2 rows share one experiment family.
+exp_id: e2_primary_generate_s42
+type: eval_only
+seed: 42
+est_hours: 0.4
+notes: "E2: generated primary decision on the d1_bce_nomp_s42 adapter"
+
+eval:
+  lora_from_experiment: d1_bce_nomp_s42
+  args:
+    mode: no_reason
+    primary_source: generated
+    gt: data/sage_eval/annotations.json
+    split: test

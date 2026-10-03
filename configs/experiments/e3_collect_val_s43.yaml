@@ -1,0 +1,15 @@
+# E3 veto protocol, seed 43 (E5 three-seed significance support)
+exp_id: e3_collect_val_s43
+type: veto_eval
+seed: 43
+est_hours: 0.3
+notes: "E3 s43: evidence collection, val split (mainline nomp adapter)"
+
+eval:
+  lora_from_experiment: d1_bce_nomp_s43
+  args:
+    stage: collect
+    split: val
+    mode: no_reason
+    threshold: 0.5
+    out: results/veto_eval_s43/val.jsonl

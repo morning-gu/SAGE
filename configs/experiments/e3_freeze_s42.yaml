@@ -1,0 +1,16 @@
+# E3 veto-quality protocol, stage 2.5 (type: veto_eval, v5): freeze the
+# slope/tilt raw floors on the validation CLAIM pool (requires the val
+# records collected WITH the VLM server). Same preregistered rule as the
+# tau freeze: largest angle ceiling on the 0-45 deg grid with FVR <= delta.
+exp_id: e3_freeze_s42
+type: veto_eval
+seed: 42
+est_hours: 0.05
+notes: "E3 v5: freeze slope/tilt angle ceilings on val claims (FVR <= 0.05)"
+
+eval:
+  args:
+    stage: freeze
+    records: results/veto_eval/val.jsonl
+    out_dir: results/veto_eval
+    threshold: 0.5

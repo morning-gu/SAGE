@@ -1,0 +1,20 @@
+# E1 channel ablation: generative-primary channel only (pure autoregressive
+# CE, no auxiliary multi-label supervision). Also serves as the training side
+# of the E2 chain-generation baseline when evaluated with generated primaries.
+exp_id: d1_ce_only_s44
+type: vlm
+seed: 44
+est_hours: 11.0         # T4 fp16 estimate (A10 measured 5h47m x ~1.9)
+notes: "E1: CE-only channel ablation (bce_weight=0, mp_weight=0), seed 44"
+
+train:
+  output_dir: checkpoints/experiments/d1_ce_only_s44
+  args:
+    bce_weight: 0.0
+    mp_weight: 0.0
+    seed: 44
+
+eval:
+  args:
+    gt: data/sage_eval/annotations.json
+    split: test

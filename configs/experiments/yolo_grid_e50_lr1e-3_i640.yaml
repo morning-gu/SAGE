@@ -1,0 +1,17 @@
+# Grid experiment (type: yolo) — see _defaults.yaml for merged defaults.
+exp_id: yolo_grid_e50_lr1e-3_i640
+type: yolo
+seed: 42
+notes: "YOLOv8s-cls grid: epochs=50, lr0=1e-3, imgsz=640"
+
+train:
+  output_dir: checkpoints/experiments/yolo_grid_e50_lr1e-3_i640/train
+  args:
+    epochs: 50
+    lr0: 0.001
+    imgsz: 640
+    seed: 42
+
+eval:
+  args:
+    threshold: 0.5

@@ -1,0 +1,14 @@
+# E3 veto protocol, seed 43 (fit stage)
+exp_id: e3_fit_s43
+type: veto_eval
+seed: 43
+est_hours: 0.1
+notes: "E3 s43: fit on the per-seed val pool"
+
+eval:
+  args:
+    stage: fit
+    records: results/veto_eval_s43/val.jsonl
+    out_dir: results/veto_eval_s43
+    threshold: 0.5
+

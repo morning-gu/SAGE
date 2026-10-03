@@ -1,0 +1,13 @@
+# E3 veto-quality protocol, stage 2 (type: veto_eval): fit validation ECDFs
+# and freeze tau (largest on the 0.50-0.95 grid with FVR <= delta = 0.05).
+exp_id: e3_fit_s42
+type: veto_eval
+seed: 42
+est_hours: 0.1
+notes: "E3: ECDF calibration + tau freezing (preregistered delta=0.05 rule)"
+
+eval:
+  args:
+    stage: fit
+    records: results/veto_eval/val.jsonl
+    out_dir: results/veto_eval

@@ -1,0 +1,18 @@
+# MP keep/drop preregistered ablation (docs/ablation_protocol.md §4, git
+# history 2c50154^): VAL-split evaluation of the E1 adapters — the wording
+# decision is frozen by the paired-bootstrap rule on these numbers BEFORE
+# any test-side MP claim is written. Decision script:
+# scripts/mp_keep_drop.py
+exp_id: d1_bce_mp_s43_val
+type: eval_only
+seed: 43
+est_hours: 0.4
+notes: "MP ablation: val-split eval of d1_bce_mp_s43 (preregistered keep/drop rule)"
+
+eval:
+  lora_from_experiment: d1_bce_mp_s43
+  args:
+    mode: no_reason
+    gt: data/sage_eval/annotations.json
+    split: val
+    threshold: 0.5

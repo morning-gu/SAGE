@@ -1,0 +1,14 @@
+# E3 veto protocol, seed 44 (freeze stage)
+exp_id: e3_freeze_s44
+type: veto_eval
+seed: 44
+est_hours: 0.1
+notes: "E3 s44: freeze on the per-seed val pool"
+
+eval:
+  args:
+    stage: freeze
+    records: results/veto_eval_s44/val.jsonl
+    out_dir: results/veto_eval_s44
+    threshold: 0.5
+
